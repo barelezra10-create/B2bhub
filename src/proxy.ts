@@ -4,7 +4,7 @@ import { getIronSession } from "iron-session";
 
 const SESSION_COOKIE = process.env.SESSION_COOKIE_NAME ?? "b2bhub_session";
 
-export async function middleware(req: NextRequest) {
+export async function proxy(req: NextRequest) {
   const url = req.nextUrl;
   if (!url.pathname.startsWith("/admin")) return NextResponse.next();
   if (url.pathname === "/admin/login") return NextResponse.next();
