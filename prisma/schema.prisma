@@ -14,3 +14,225 @@ model AdminUser {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 }
+
+model Category {
+  id              String      @id @default(cuid())
+  slug            String      @unique
+  name            String
+  description     String      @db.Text
+  icon            String?
+  heroImage       String?
+  seoTitle        String?
+  seoDescription  String?
+  sortOrder       Int         @default(0)
+  isActive        Boolean     @default(true)
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+
+  vendors         Vendor[]
+  buyerGuides     BuyerGuide[]
+  leads           Lead[]
+  sponsoredPlacements SponsoredPlacement[]
+
+  @@index([sortOrder])
+}
+
+enum PricingModel {
+  free
+  freemium
+  paid
+  quote
+}
+
+enum Segment {
+  smb
+  mid_market
+  enterprise
+  all
+}
+
+enum SponsorTier {
+  none
+  featured
+  premium
+}
+
+enum VendorStatus {
+  draft
+  published
+}
+
+model Vendor {
+  id                  String        @id @default(cuid())
+  slug                String        @unique
+  name                String
+  logoUrl             String?
+  websiteUrl          String
+
+  categoryId          String
+  category            Category      @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+
+  tagline             String?
+  descriptionShort    String?       @db.Text
+  descriptionLong     String?       @db.Text
+
+  foundedYear         Int?
+  hqLocation          String?
+  employeeCountRange  String?
+
+  pricingModel        PricingModel  @default(quote)
+  pricingStartingAt   String?
+  pricingNotes        String?       @db.Text
+
+  bestForSegment      Segment       @default(all)
+  ourScore            Int?
+  ourScoreNotes       String?       @db.Text
+
+  pros                String[]
+  cons                String[]
+  keyFeatures         String[]
+  integrations        String[]
+
+  isClaimed           Boolean       @default(false)
+  isPaidSponsor       Boolean       @default(false)
+  sponsorTier         SponsorTier   @default(none)
+  sponsorRankBoost    Int           @default(0)
+
+  leadFormEnabled     Boolean       @default(true)
+  leadDestination     String?
+  affiliateUrl        String?
+
+  status              VendorStatus  @default(draft)
+  createdAt           DateTime      @default(now())
+  updatedAt           DateTime      @updatedAt
+
+  screenshots         VendorScreenshot[]
+  comparisonsAsA      Comparison[]  @relation("ComparisonVendorA")
+  comparisonsAsB      Comparison[]  @relation("ComparisonVendorB")
+  leads               Lead[]
+  sponsoredPlacements SponsoredPlacement[]
+
+  @@index([categoryId])
+  @@index([status])
+  @@index([sponsorTier])
+}
+
+model VendorScreenshot {
+  id        String   @id @default(cuid())
+  vendorId  String
+  vendor    Vendor   @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+  url       String
+  caption   String?
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+
+  @@index([vendorId])
+}
+
+model Comparison {
+  id           String   @id @default(cuid())
+  slug         String   @unique
+  vendorAId    String
+  vendorA      Vendor   @relation("ComparisonVendorA", fields: [vendorAId], references: [id], onDelete: Cascade)
+  vendorBId    String
+  vendorB      Vendor   @relation("ComparisonVendorB", fields: [vendorBId], references: [id], onDelete: Cascade)
+
+  hookCopy     String?  @db.Text
+  summaryCopy  String?  @db.Text
+  verdictCopy  String?  @db.Text
+
+  isPublished  Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@unique([vendorAId, vendorBId])
+}
+
+model BuyerGuide {
+  id              String   @id @default(cuid())
+  slug            String   @unique
+  categoryId      String
+  category        Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  title           String
+  bodyMarkdown    String   @db.Text
+  tableOfContents Json?
+  isPublished     Boolean  @default(false)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([categoryId])
+}
+
+enum LeadIntent {
+  evaluating
+  ready_to_buy
+  just_looking
+}
+
+enum LeadStatus {
+  new
+  sent_to_vendor
+  qualified
+  disqualified
+}
+
+model Lead {
+  id                  String      @id @default(cuid())
+  vendorId            String?
+  vendor              Vendor?     @relation(fields: [vendorId], references: [id], onDelete: SetNull)
+  categoryId          String?
+  category            Category?   @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+
+  pagePath            String
+  contactName         String
+  contactEmail        String
+  contactPhone        String?
+  companyName         String?
+  companySize         String?
+
+  intent              LeadIntent  @default(evaluating)
+  message             String?     @db.Text
+
+  status              LeadStatus  @default(new)
+  vendorEmailSentAt   DateTime?
+  internalNotes       String?     @db.Text
+
+  utmSource           String?
+  utmMedium           String?
+  utmCampaign         String?
+  gclid               String?
+  referrer            String?
+  ipHash              String?
+
+  createdAt           DateTime    @default(now())
+
+  @@index([vendorId])
+  @@index([categoryId])
+  @@index([status])
+  @@index([createdAt])
+}
+
+enum PlacementType {
+  top_of_category
+  featured_compare
+  sidebar
+}
+
+model SponsoredPlacement {
+  id            String         @id @default(cuid())
+  vendorId      String
+  vendor        Vendor         @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+  categoryId    String?
+  category      Category?      @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  placementType PlacementType
+  startsAt      DateTime
+  endsAt        DateTime
+  monthlyRate   Decimal        @db.Decimal(10, 2)
+  isActive      Boolean        @default(true)
+  notes         String?        @db.Text
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+
+  @@index([vendorId])
+  @@index([isActive])
+}
