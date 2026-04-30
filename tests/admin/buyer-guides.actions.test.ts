@@ -3,7 +3,8 @@ import { createBuyerGuideAction, updateBuyerGuideAction, deleteBuyerGuideAction 
 
 vi.mock("@/lib/db", () => ({
   db: {
-    buyerGuide: { create: vi.fn(), update: vi.fn(), delete: vi.fn() },
+    buyerGuide: { create: vi.fn(), update: vi.fn(), delete: vi.fn(), findUnique: vi.fn() },
+    category: { findUnique: vi.fn() },
   },
 }));
 vi.mock("next/cache", () => ({ revalidatePath: vi.fn() }));

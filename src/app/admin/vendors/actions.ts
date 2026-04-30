@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { z } from "zod";
 import { db } from "@/lib/db";
 import { toSlug } from "@/lib/slug";
+import { revalidateVendor } from "@/lib/revalidate";
 
 const PRICING = ["free", "freemium", "paid", "quote"] as const;
 const SEGMENT = ["smb", "mid_market", "enterprise", "all"] as const;
@@ -95,17 +96,26 @@ function dataFromParsed(p: z.infer<typeof baseSchema>) {
 export async function createVendorAction(formData: FormData) {
   const parsed = createSchema.parse(fdToObj(formData));
   const slug = toSlug(parsed.name);
+  const category = await db.category.findUnique({
+    where: { id: parsed.categoryId },
+    select: { slug: true },
+  });
   await db.vendor.create({
     data: {
       slug,
       ...dataFromParsed(parsed),
     },
   });
+  if (category) revalidateVendor(category.slug, slug);
   redirect(`/admin/vendors/${slug}`);
 }
 
 export async function updateVendorAction(formData: FormData) {
   const parsed = updateSchema.parse(fdToObj(formData));
+  const category = await db.category.findUnique({
+    where: { id: parsed.categoryId },
+    select: { slug: true },
+  });
   await db.vendor.update({
     where: { id: parsed.id },
     data: {
@@ -113,10 +123,16 @@ export async function updateVendorAction(formData: FormData) {
       ...dataFromParsed(parsed),
     },
   });
+  if (category) revalidateVendor(category.slug, parsed.slug);
   redirect(`/admin/vendors/${parsed.slug}`);
 }
 
 export async function deleteVendorAction(id: string) {
+  const vendor = await db.vendor.findUnique({
+    where: { id },
+    include: { category: { select: { slug: true } } },
+  });
   await db.vendor.delete({ where: { id } });
+  if (vendor) revalidateVendor(vendor.category.slug, vendor.slug);
   redirect("/admin/vendors");
 }

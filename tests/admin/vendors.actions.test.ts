@@ -7,6 +7,10 @@ vi.mock("@/lib/db", () => ({
       create: vi.fn(),
       update: vi.fn(),
       delete: vi.fn(),
+      findUnique: vi.fn(),
+    },
+    category: {
+      findUnique: vi.fn(),
     },
   },
 }));

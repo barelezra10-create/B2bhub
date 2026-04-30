@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { z } from "zod";
 import { db } from "@/lib/db";
 import { vsSlug } from "@/lib/slug";
+import { revalidateComparison } from "@/lib/revalidate";
 
 const createSchema = z.object({
   vendorAId: z.string().min(1),
@@ -47,6 +48,7 @@ export async function createComparisonAction(formData: FormData) {
       isPublished: false,
     },
   });
+  revalidateComparison(slug);
   redirect(`/admin/comparisons/${slug}`);
 }
 
@@ -61,10 +63,16 @@ export async function updateComparisonAction(formData: FormData) {
       isPublished: parsed.isPublished === "on",
     },
   });
+  revalidateComparison(parsed.slug);
   redirect(`/admin/comparisons/${parsed.slug}`);
 }
 
 export async function deleteComparisonAction(id: string) {
+  const comparison = await db.comparison.findUnique({
+    where: { id },
+    select: { slug: true },
+  });
   await db.comparison.delete({ where: { id } });
+  if (comparison) revalidateComparison(comparison.slug);
   redirect("/admin/comparisons");
 }

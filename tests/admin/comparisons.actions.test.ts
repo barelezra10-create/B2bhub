@@ -3,7 +3,7 @@ import { createComparisonAction, updateComparisonAction, deleteComparisonAction 
 
 vi.mock("@/lib/db", () => ({
   db: {
-    comparison: { create: vi.fn(), update: vi.fn(), delete: vi.fn() },
+    comparison: { create: vi.fn(), update: vi.fn(), delete: vi.fn(), findUnique: vi.fn() },
     vendor: { findMany: vi.fn() },
   },
 }));
