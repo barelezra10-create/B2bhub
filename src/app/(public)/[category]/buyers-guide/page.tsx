@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { db } from "@/lib/db";
 import { Markdown } from "@/lib/markdown";
 import { PageHero } from "../../_components/PageHero";
+import { JsonLd, articleJsonLd, breadcrumbJsonLd } from "@/lib/schema-org";
 
 export const revalidate = 3600;
 
@@ -50,6 +51,16 @@ export default async function BuyerGuidePage({
 
   return (
     <>
+      <JsonLd data={articleJsonLd({
+        title: guide.title,
+        description: `Buyer's guide for ${category.name.toLowerCase()}.`,
+        url: `/${category.slug}/buyers-guide`,
+      })} />
+      <JsonLd data={breadcrumbJsonLd([
+        { name: "Home", url: "/" },
+        { name: category.name, url: `/${category.slug}` },
+        { name: "Buyer's guide", url: `/${category.slug}/buyers-guide` },
+      ])} />
       <PageHero
         eyebrow={`${category.name} buyer's guide`}
         title={guide.title}

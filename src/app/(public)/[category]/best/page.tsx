@@ -5,6 +5,7 @@ import { pickTopN } from "@/lib/ranking";
 import { PageHero } from "../../_components/PageHero";
 import { VendorRankRow } from "../../_components/VendorRankRow";
 import { FaqList } from "../../_components/FaqList";
+import { JsonLd, itemListJsonLd, breadcrumbJsonLd } from "@/lib/schema-org";
 
 export const revalidate = 3600;
 
@@ -59,6 +60,20 @@ export default async function TopNPage({
 
   return (
     <>
+      <JsonLd data={itemListJsonLd({
+        name: `Best ${category.name} (${year})`,
+        vendors: top.map((v) => ({
+          name: v.name,
+          slug: v.slug,
+          categorySlug: category.slug,
+          ourScore: v.ourScore,
+        })),
+      })} />
+      <JsonLd data={breadcrumbJsonLd([
+        { name: "Home", url: "/" },
+        { name: category.name, url: `/${category.slug}` },
+        { name: "Best", url: `/${category.slug}/best` },
+      ])} />
       <PageHero
         eyebrow="Top picks"
         title={`Best ${category.name} (${year})`}

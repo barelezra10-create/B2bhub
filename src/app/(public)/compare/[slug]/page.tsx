@@ -5,6 +5,7 @@ import { db } from "@/lib/db";
 import { Markdown } from "@/lib/markdown";
 import { PageHero } from "../../_components/PageHero";
 import { ScorePill } from "../../_components/ScorePill";
+import { JsonLd, breadcrumbJsonLd } from "@/lib/schema-org";
 
 export const revalidate = 3600;
 
@@ -94,6 +95,11 @@ export default async function ComparisonPage({
 
   return (
     <>
+      <JsonLd data={breadcrumbJsonLd([
+        { name: "Home", url: "/" },
+        { name: "Compare", url: "/compare" },
+        { name: `${a.name} vs ${b.name}`, url: `/compare/${cmp.slug}` },
+      ])} />
       <PageHero
         eyebrow="Comparison"
         title={`${a.name} vs ${b.name}`}

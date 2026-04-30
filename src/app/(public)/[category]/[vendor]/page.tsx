@@ -9,6 +9,7 @@ import { ScorePill } from "../../_components/ScorePill";
 import { SponsoredBadge } from "../../_components/SponsoredBadge";
 import { VendorCard } from "../../_components/VendorCard";
 import { FaqList } from "../../_components/FaqList";
+import { JsonLd, softwareApplicationJsonLd, breadcrumbJsonLd } from "@/lib/schema-org";
 
 export const revalidate = 3600;
 
@@ -99,6 +100,12 @@ export default async function VendorPage({
     const alternatives = sortedCompetitors.slice(0, 8);
     return (
       <>
+        <JsonLd data={breadcrumbJsonLd([
+          { name: "Home", url: "/" },
+          { name: vendor.category.name, url: `/${vendor.category.slug}` },
+          { name: vendor.name, url: `/${vendor.category.slug}/${vendor.slug}` },
+          { name: "Alternatives", url: `/${vendor.category.slug}/${vendor.slug}-alternatives` },
+        ])} />
         <PageHero
           eyebrow={vendor.category.name}
           title={`${vendor.name} alternatives`}
@@ -151,6 +158,12 @@ export default async function VendorPage({
 
   return (
     <>
+      <JsonLd data={softwareApplicationJsonLd(vendor)} />
+      <JsonLd data={breadcrumbJsonLd([
+        { name: "Home", url: "/" },
+        { name: vendor.category.name, url: `/${vendor.category.slug}` },
+        { name: vendor.name, url: `/${vendor.category.slug}/${vendor.slug}` },
+      ])} />
       <PageHero
         eyebrow={vendor.category.name}
         title={vendor.name}

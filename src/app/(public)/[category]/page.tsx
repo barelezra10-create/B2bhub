@@ -6,6 +6,7 @@ import { displayRank } from "@/lib/ranking";
 import { PageHero } from "../_components/PageHero";
 import { VendorCard } from "../_components/VendorCard";
 import { FaqList } from "../_components/FaqList";
+import { JsonLd, categoryJsonLd, faqJsonLd, breadcrumbJsonLd } from "@/lib/schema-org";
 
 export const revalidate = 3600;
 
@@ -73,6 +74,12 @@ export default async function CategoryPage({
 
   return (
     <>
+      <JsonLd data={categoryJsonLd(category)} />
+      <JsonLd data={breadcrumbJsonLd([
+        { name: "Home", url: "/" },
+        { name: category.name, url: `/${category.slug}` },
+      ])} />
+      <JsonLd data={faqJsonLd(faqs)} />
       <PageHero
         eyebrow="Category"
         title={category.name}
