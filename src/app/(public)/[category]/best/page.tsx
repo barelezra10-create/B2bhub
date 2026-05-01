@@ -17,11 +17,15 @@ const SEGMENT_LABELS: Record<string, string> = {
 };
 
 export async function generateStaticParams() {
-  const categories = await db.category.findMany({
-    where: { isActive: true },
-    select: { slug: true },
-  });
-  return categories.map((c) => ({ category: c.slug }));
+  try {
+    const categories = await db.category.findMany({
+      where: { isActive: true },
+      select: { slug: true },
+    });
+    return categories.map((c) => ({ category: c.slug }));
+  } catch {
+    return [];
+  }
 }
 
 export async function generateMetadata({

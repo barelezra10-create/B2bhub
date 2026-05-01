@@ -24,11 +24,15 @@ const PRICING_LABELS: Record<string, string> = {
 };
 
 export async function generateStaticParams() {
-  const comparisons = await db.comparison.findMany({
-    where: { isPublished: true },
-    select: { slug: true },
-  });
-  return comparisons.map((c) => ({ slug: c.slug }));
+  try {
+    const comparisons = await db.comparison.findMany({
+      where: { isPublished: true },
+      select: { slug: true },
+    });
+    return comparisons.map((c) => ({ slug: c.slug }));
+  } catch {
+    return [];
+  }
 }
 
 export async function generateMetadata({

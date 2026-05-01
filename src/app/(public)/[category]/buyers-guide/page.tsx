@@ -8,11 +8,15 @@ import { JsonLd, articleJsonLd, breadcrumbJsonLd } from "@/lib/schema-org";
 export const revalidate = 3600;
 
 export async function generateStaticParams() {
-  const guides = await db.buyerGuide.findMany({
-    where: { isPublished: true },
-    select: { category: { select: { slug: true } } },
-  });
-  return guides.map((g) => ({ category: g.category.slug }));
+  try {
+    const guides = await db.buyerGuide.findMany({
+      where: { isPublished: true },
+      select: { category: { select: { slug: true } } },
+    });
+    return guides.map((g) => ({ category: g.category.slug }));
+  } catch {
+    return [];
+  }
 }
 
 export async function generateMetadata({

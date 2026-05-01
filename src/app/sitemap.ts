@@ -4,12 +4,20 @@ import { db } from "@/lib/db";
 const BASE_URL = process.env.SITE_URL ?? "https://web-production-930b0.up.railway.app";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const [categories, vendors, comparisons, buyerGuides] = await Promise.all([
-    db.category.findMany({ where: { isActive: true } }),
-    db.vendor.findMany({ where: { status: "published" }, include: { category: true } }),
-    db.comparison.findMany({ where: { isPublished: true } }),
-    db.buyerGuide.findMany({ where: { isPublished: true }, include: { category: true } }),
-  ]);
+  let categories: Awaited<ReturnType<typeof db.category.findMany>> = [];
+  let vendors: Awaited<ReturnType<typeof db.vendor.findMany<{ include: { category: true } }>>> = [];
+  let comparisons: Awaited<ReturnType<typeof db.comparison.findMany>> = [];
+  let buyerGuides: Awaited<ReturnType<typeof db.buyerGuide.findMany<{ include: { category: true } }>>> = [];
+  try {
+    [categories, vendors, comparisons, buyerGuides] = await Promise.all([
+      db.category.findMany({ where: { isActive: true } }),
+      db.vendor.findMany({ where: { status: "published" }, include: { category: true } }),
+      db.comparison.findMany({ where: { isPublished: true } }),
+      db.buyerGuide.findMany({ where: { isPublished: true }, include: { category: true } }),
+    ]);
+  } catch {
+    // DB unreachable (e.g., during Railway build before runtime). Return minimal sitemap.
+  }
 
   const urls: MetadataRoute.Sitemap = [
     { url: `${BASE_URL}/`, changeFrequency: "weekly", priority: 1 },

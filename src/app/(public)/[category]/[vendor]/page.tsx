@@ -28,15 +28,18 @@ const PRICING_LABELS: Record<string, string> = {
 };
 
 export async function generateStaticParams() {
-  const vendors = await db.vendor.findMany({
-    where: { status: "published" },
-    select: { slug: true, category: { select: { slug: true } } },
-  });
-  // Pre-render both /<category>/<vendor> and /<category>/<vendor>-alternatives
-  return vendors.flatMap((v) => [
-    { category: v.category.slug, vendor: v.slug },
-    { category: v.category.slug, vendor: `${v.slug}-alternatives` },
-  ]);
+  try {
+    const vendors = await db.vendor.findMany({
+      where: { status: "published" },
+      select: { slug: true, category: { select: { slug: true } } },
+    });
+    return vendors.flatMap((v) => [
+      { category: v.category.slug, vendor: v.slug },
+      { category: v.category.slug, vendor: `${v.slug}-alternatives` },
+    ]);
+  } catch {
+    return [];
+  }
 }
 
 function parseSegment(segment: string): { vendorSlug: string; isAlternatives: boolean } {
