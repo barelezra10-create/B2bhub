@@ -20,12 +20,12 @@ export function ScorePill({
   } as const;
   const s = sizes[size];
 
-  // High = mint, mid = soft purple, low = muted
+  // 8.5+ = vibrant orange; 7+ = peach; below = soft cream
   const tone =
     score >= 8.5
-      ? "bg-[var(--accent)] text-[var(--bg)] border-[var(--accent-deep)] shadow-[0_0_24px_-4px_var(--accent-glow)]"
+      ? "bg-[var(--accent)] text-white border-[var(--accent-deep)] shadow-[0_4px_12px_-2px_var(--accent-glow)]"
       : score >= 7
-      ? "bg-[var(--bg-elev-2)] text-[var(--accent)] border-[var(--accent)]"
+      ? "bg-[var(--pastel-peach)] text-[var(--accent-deep)] border-[var(--accent)]"
       : "bg-[var(--bg-elev)] text-[var(--fg-muted)] border-[var(--border)]";
 
   return (
@@ -36,7 +36,7 @@ export function ScorePill({
       <span className={`font-mono font-semibold leading-none ${s.num}`}>
         {score.toFixed(1)}
       </span>
-      <span className={`mt-0.5 font-mono uppercase tracking-[0.15em] opacity-60 ${s.suf}`}>
+      <span className={`mt-0.5 font-mono uppercase tracking-[0.15em] opacity-70 ${s.suf}`}>
         / 10
       </span>
     </span>

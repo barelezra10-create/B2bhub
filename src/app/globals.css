@@ -5,43 +5,47 @@
 @import url("https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=Geist+Mono:wght@400;500;600&display=swap");
 
 :root {
-  /* Backgrounds */
-  --bg: #0a0a10;
-  --bg-elev: #14141c;
-  --bg-elev-2: #1c1c26;
-  --bg-elev-3: #262633;
+  /* Backgrounds - warm cream */
+  --bg: #fff8f0;
+  --bg-elev: #fff1de;
+  --bg-elev-2: #ffe4c2;
+  --bg-elev-3: #ffd9a8;
 
   /* Borders */
-  --border: #262630;
-  --border-strong: #3a3a48;
-  --border-soft: #1c1c26;
+  --border: #f0d9b5;
+  --border-strong: #e6c79a;
+  --border-soft: #f7e8cf;
 
   /* Text */
-  --fg: #fafafa;
-  --fg-soft: #d4d4dc;
-  --fg-muted: #8e8e9a;
-  --fg-subtle: #5a5a66;
+  --fg: #1c1410;
+  --fg-soft: #3a2e22;
+  --fg-muted: #74604a;
+  --fg-subtle: #a08766;
 
-  /* Signature accent: electric mint */
-  --accent: #5eead4;
-  --accent-hover: #2dd4bf;
-  --accent-deep: #14b8a6;
-  --accent-soft: rgba(94, 234, 212, 0.12);
-  --accent-ring: rgba(94, 234, 212, 0.35);
-  --accent-glow: rgba(94, 234, 212, 0.45);
+  /* Signature accent: vibrant orange */
+  --accent: #ff7a2e;
+  --accent-hover: #ff5a14;
+  --accent-deep: #d94a14;
+  --accent-soft: rgba(255, 122, 46, 0.12);
+  --accent-ring: rgba(255, 122, 46, 0.35);
+  --accent-glow: rgba(255, 122, 46, 0.3);
 
-  /* Premium / sponsored: warm gold */
-  --gold: #fbbf24;
-  --gold-soft: rgba(251, 191, 36, 0.15);
+  /* Pastel highlights - used in cards, badges, decorative shapes */
+  --pastel-peach: #ffd4b5;
+  --pastel-coral: #ffc4b5;
+  --pastel-lavender: #e0cfff;
+  --pastel-sky: #bfe3ff;
+  --pastel-mint: #c7f0da;
+  --pastel-rose: #ffd4e0;
+  --pastel-yellow: #ffe9a3;
+
+  /* Premium / sponsored: amber */
+  --gold: #c47e1a;
+  --gold-soft: #ffe9c7;
 
   /* Danger / cons: warm coral */
-  --danger: #fb7185;
-  --danger-soft: rgba(251, 113, 133, 0.15);
-
-  /* Score tiers */
-  --score-elite: #5eead4;
-  --score-strong: #c4b5fd;
-  --score-mid: #fbbf24;
+  --danger: #d94a3f;
+  --danger-soft: #ffd4ce;
 
   --background: var(--bg);
   --foreground: var(--fg);
@@ -54,10 +58,8 @@
   --color-bg: var(--bg);
   --color-bg-elev: var(--bg-elev);
   --color-bg-elev-2: var(--bg-elev-2);
-  --color-bg-elev-3: var(--bg-elev-3);
   --color-border: var(--border);
   --color-border-strong: var(--border-strong);
-  --color-border-soft: var(--border-soft);
   --color-fg: var(--fg);
   --color-fg-soft: var(--fg-soft);
   --color-fg-muted: var(--fg-muted);
@@ -65,6 +67,13 @@
   --color-accent: var(--accent);
   --color-accent-hover: var(--accent-hover);
   --color-accent-deep: var(--accent-deep);
+  --color-pastel-peach: var(--pastel-peach);
+  --color-pastel-coral: var(--pastel-coral);
+  --color-pastel-lavender: var(--pastel-lavender);
+  --color-pastel-sky: var(--pastel-sky);
+  --color-pastel-mint: var(--pastel-mint);
+  --color-pastel-rose: var(--pastel-rose);
+  --color-pastel-yellow: var(--pastel-yellow);
   --color-gold: var(--gold);
   --color-danger: var(--danger);
 
@@ -79,7 +88,6 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
-  color-scheme: dark;
 }
 
 body {
@@ -102,13 +110,11 @@ h1 { letter-spacing: -0.035em; }
   font-feature-settings: "tnum" on, "lnum" on;
 }
 
-/* Selection */
 ::selection {
   background: var(--accent);
-  color: var(--bg);
+  color: white;
 }
 
-/* Scrollbar (webkit only - Chrome / Safari / Edge) */
 ::-webkit-scrollbar {
   width: 10px;
   height: 10px;
@@ -124,49 +130,56 @@ h1 { letter-spacing: -0.035em; }
   background: var(--accent);
 }
 
-/* Decorative grid overlay */
-.grid-overlay {
-  background-image:
-    linear-gradient(to right, rgba(94, 234, 212, 0.04) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(94, 234, 212, 0.04) 1px, transparent 1px);
-  background-size: 40px 40px;
-}
-
-/* Radial accent glow - for hero backgrounds */
-.glow-radial {
-  background-image:
-    radial-gradient(60% 60% at 20% 30%, rgba(94, 234, 212, 0.12) 0%, transparent 60%),
-    radial-gradient(40% 40% at 80% 70%, rgba(196, 181, 253, 0.08) 0%, transparent 60%);
-}
-
-/* Spotlight glow - for cards */
-.glow-spotlight {
+/* Pastel blob accents for hero backgrounds */
+.blobs {
   position: relative;
+  overflow: hidden;
 }
-.glow-spotlight::before {
+.blobs::before,
+.blobs::after {
   content: "";
   position: absolute;
-  inset: -1px;
-  border-radius: inherit;
-  background: radial-gradient(120% 100% at 50% 0%, rgba(94, 234, 212, 0.2), transparent 50%);
-  opacity: 0;
-  transition: opacity 250ms;
+  border-radius: 50%;
+  filter: blur(60px);
   pointer-events: none;
+  z-index: 0;
 }
-.glow-spotlight:hover::before {
-  opacity: 1;
+.blobs::before {
+  width: 480px;
+  height: 480px;
+  top: -120px;
+  right: -120px;
+  background: radial-gradient(circle, var(--pastel-peach) 0%, transparent 70%);
+  opacity: 0.85;
+}
+.blobs::after {
+  width: 380px;
+  height: 380px;
+  bottom: -120px;
+  left: -80px;
+  background: radial-gradient(circle, var(--pastel-lavender) 0%, transparent 70%);
+  opacity: 0.7;
 }
 
-/* Card: dark surface with subtle border + hover lift */
+/* Soft warm shadow */
+.shadow-warm {
+  box-shadow: 0 1px 2px rgba(28, 20, 16, 0.04), 0 8px 24px -8px rgba(28, 20, 16, 0.08);
+}
+.shadow-warm-lg {
+  box-shadow: 0 2px 4px rgba(28, 20, 16, 0.05), 0 24px 48px -16px rgba(28, 20, 16, 0.12);
+}
+
+/* Card: warm surface with subtle border + hover lift */
 .card {
-  background: var(--bg-elev);
+  background: var(--bg);
   border: 1px solid var(--border);
   transition: border-color 200ms ease, transform 200ms ease, box-shadow 250ms ease;
+  border-radius: 16px;
 }
 .card:hover {
   border-color: var(--accent);
-  transform: translateY(-2px);
-  box-shadow: 0 0 0 1px var(--accent-ring), 0 20px 40px -20px var(--accent-glow);
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px rgba(28, 20, 16, 0.04), 0 24px 48px -16px var(--accent-glow);
 }
 
 /* Pill / chip */
@@ -174,9 +187,9 @@ h1 { letter-spacing: -0.035em; }
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  padding: 0.2rem 0.55rem;
+  padding: 0.25rem 0.6rem;
   border: 1px solid var(--border);
-  background: var(--bg-elev);
+  background: var(--bg);
   font-family: var(--font-mono);
   font-size: 10px;
   letter-spacing: 0.16em;
@@ -187,12 +200,27 @@ h1 { letter-spacing: -0.035em; }
 .chip-accent {
   border-color: var(--accent);
   background: var(--accent-soft);
-  color: var(--accent);
+  color: var(--accent-deep);
 }
 .chip-gold {
   border-color: var(--gold);
   background: var(--gold-soft);
   color: var(--gold);
+}
+.chip-mint {
+  border-color: var(--pastel-mint);
+  background: var(--pastel-mint);
+  color: #166534;
+}
+.chip-sky {
+  border-color: var(--pastel-sky);
+  background: var(--pastel-sky);
+  color: #075985;
+}
+.chip-lavender {
+  border-color: var(--pastel-lavender);
+  background: var(--pastel-lavender);
+  color: #5b21b6;
 }
 
 /* Animated underline */
@@ -207,25 +235,26 @@ h1 { letter-spacing: -0.035em; }
   background-size: 100% 1px;
 }
 
-/* Solid button */
+/* Solid orange button */
 .btn-primary {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.7rem 1.1rem;
+  padding: 0.75rem 1.25rem;
   background: var(--accent);
-  color: var(--bg);
+  color: white;
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: 13px;
+  font-size: 14px;
   letter-spacing: -0.01em;
-  border-radius: 8px;
+  border-radius: 10px;
   transition: background 150ms, transform 150ms, box-shadow 200ms;
-  box-shadow: 0 0 0 0 var(--accent-ring), 0 6px 16px -6px var(--accent-glow);
+  box-shadow: 0 2px 4px rgba(255, 122, 46, 0.2), 0 8px 16px -4px var(--accent-glow);
 }
 .btn-primary:hover {
   background: var(--accent-hover);
-  box-shadow: 0 0 0 4px var(--accent-ring), 0 12px 28px -8px var(--accent-glow);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(255, 122, 46, 0.3), 0 16px 32px -8px var(--accent-glow);
 }
 
 /* Outline button */
@@ -233,26 +262,27 @@ h1 { letter-spacing: -0.035em; }
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.7rem 1.1rem;
-  background: transparent;
+  padding: 0.75rem 1.25rem;
+  background: var(--bg-elev);
   color: var(--fg);
   border: 1px solid var(--border-strong);
   font-family: var(--font-display);
-  font-weight: 500;
-  font-size: 13px;
+  font-weight: 600;
+  font-size: 14px;
   letter-spacing: -0.01em;
-  border-radius: 8px;
-  transition: border-color 150ms, color 150ms, background 150ms;
+  border-radius: 10px;
+  transition: border-color 150ms, color 150ms, background 150ms, transform 150ms;
 }
 .btn-outline:hover {
   border-color: var(--accent);
   color: var(--accent);
-  background: var(--accent-soft);
+  background: var(--bg);
+  transform: translateY(-1px);
 }
 
-/* Logo tile - white-bg square so favicons render legibly */
+/* Logo tile - warm neutral so favicons render legibly */
 .logo-tile {
-  background: #ffffff;
+  background: white;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -266,7 +296,6 @@ h1 { letter-spacing: -0.035em; }
   object-fit: contain;
 }
 
-/* Stagger entrance */
 @keyframes fade-rise {
   from { opacity: 0; transform: translateY(12px); }
   to   { opacity: 1; transform: translateY(0); }
@@ -275,7 +304,6 @@ h1 { letter-spacing: -0.035em; }
   animation: fade-rise 700ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-/* Score number tick */
 @keyframes score-pop {
   0%   { transform: scale(0.8); opacity: 0; }
   60%  { transform: scale(1.06); opacity: 1; }
@@ -285,16 +313,14 @@ h1 { letter-spacing: -0.035em; }
   animation: score-pop 600ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }
 
-/* Subtle pulse for "live" markers */
 @keyframes pulse-soft {
-  0%, 100% { opacity: 0.7; transform: scale(1); }
+  0%, 100% { opacity: 0.6; transform: scale(1); }
   50%      { opacity: 1; transform: scale(1.4); }
 }
 .pulse-dot {
   animation: pulse-soft 1.6s ease-in-out infinite;
 }
 
-/* Marquee strip */
 @keyframes marquee {
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
@@ -303,32 +329,20 @@ h1 { letter-spacing: -0.035em; }
   animation: marquee 50s linear infinite;
 }
 
-/* Mask fade for marquee edges */
 .mask-fade {
   -webkit-mask-image: linear-gradient(to right, transparent 0, black 5%, black 95%, transparent 100%);
   mask-image: linear-gradient(to right, transparent 0, black 5%, black 95%, transparent 100%);
 }
 
-/* Shimmer for placeholder */
-@keyframes shimmer {
-  from { background-position: -200% 0; }
-  to   { background-position: 200% 0; }
-}
-.shimmer {
-  background: linear-gradient(90deg, var(--bg-elev) 25%, var(--bg-elev-2) 50%, var(--bg-elev) 75%);
-  background-size: 200% 100%;
-  animation: shimmer 1.5s linear infinite;
-}
-
-/* Gradient text accent */
+/* Gradient text accent: orange → coral */
 .text-gradient {
-  background: linear-gradient(135deg, var(--accent) 0%, #c4b5fd 100%);
+  background: linear-gradient(135deg, var(--accent) 0%, #ff5577 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-/* Editorial dropcap (kept for long-form vendor reviews) */
+/* Editorial dropcap */
 .dropcap > p:first-of-type::first-letter {
   font-family: var(--font-display);
   float: left;
@@ -348,8 +362,8 @@ h1 { letter-spacing: -0.035em; }
   font-size: 11px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--accent);
-  font-weight: 500;
+  color: var(--accent-deep);
+  font-weight: 600;
 }
 .eyebrow::before {
   content: "";
@@ -359,7 +373,6 @@ h1 { letter-spacing: -0.035em; }
   background: currentColor;
 }
 
-/* Container */
 .container-x {
   width: 100%;
   max-width: 1200px;
@@ -367,12 +380,24 @@ h1 { letter-spacing: -0.035em; }
   padding-inline: 1.5rem;
 }
 
+/* Compatibility shim - older pages reference this class.
+   In the warm palette we just rely on .card hover, no glow needed. */
+.glow-spotlight {}
+
+/* Pastel accent rotation - applied via index */
+.pastel-0 { background: var(--pastel-peach); }
+.pastel-1 { background: var(--pastel-mint); }
+.pastel-2 { background: var(--pastel-sky); }
+.pastel-3 { background: var(--pastel-lavender); }
+.pastel-4 { background: var(--pastel-rose); }
+.pastel-5 { background: var(--pastel-yellow); }
+.pastel-6 { background: var(--pastel-coral); }
+
 @media (prefers-reduced-motion: reduce) {
   .fade-rise,
   .score-pop,
   .pulse-dot,
-  .marquee,
-  .shimmer {
+  .marquee {
     animation: none !important;
   }
   .card,

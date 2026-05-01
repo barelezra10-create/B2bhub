@@ -19,9 +19,7 @@ export function PageHero({
       : "text-4xl md:text-5xl lg:text-6xl";
 
   return (
-    <section className="relative overflow-hidden border-b border-[var(--border)] bg-[var(--bg)]">
-      <div className="absolute inset-0 glow-radial" aria-hidden />
-      <div className="absolute inset-0 grid-overlay opacity-50" aria-hidden />
+    <section className="relative overflow-hidden border-b border-[var(--border)] bg-[var(--bg)] blobs">
       <div
         className={`relative container-x ${variant === "ultra" ? "py-20 md:py-28" : "py-14 md:py-20"}`}
       >

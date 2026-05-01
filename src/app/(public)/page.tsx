@@ -7,6 +7,16 @@ import { displayRank } from "@/lib/ranking";
 
 export const revalidate = 3600;
 
+const PASTELS = [
+  "var(--pastel-peach)",
+  "var(--pastel-mint)",
+  "var(--pastel-sky)",
+  "var(--pastel-lavender)",
+  "var(--pastel-rose)",
+  "var(--pastel-yellow)",
+  "var(--pastel-coral)",
+];
+
 export default async function HomePage() {
   const categories = await db.category.findMany({
     where: { isActive: true },
@@ -47,13 +57,10 @@ export default async function HomePage() {
   return (
     <>
       {/* HERO */}
-      <section className="relative overflow-hidden border-b border-[var(--border)] bg-[var(--bg)]">
-        <div className="absolute inset-0 glow-radial" aria-hidden />
-        <div className="absolute inset-0 grid-overlay opacity-50" aria-hidden />
-
+      <section className="relative overflow-hidden border-b border-[var(--border)] bg-[var(--bg)] blobs">
         <div className="relative container-x py-20 md:py-28 lg:py-32">
           <div className="flex items-center gap-3">
-            <span className="inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--bg-elev)] px-3 py-1 text-xs">
+            <span className="inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--bg-elev)] px-3 py-1 text-xs shadow-warm">
               <span className="h-1.5 w-1.5 rounded-full bg-[var(--accent)] pulse-dot" aria-hidden />
               <span className="font-mono uppercase tracking-[0.18em] text-[var(--fg-muted)]">
                 Live · {categories.length} categories tracked
@@ -61,9 +68,7 @@ export default async function HomePage() {
             </span>
           </div>
 
-          <h1
-            className="mt-8 max-w-5xl font-display font-bold leading-[0.92] tracking-tight text-[var(--fg)] text-5xl md:text-7xl lg:text-[5.5rem] fade-rise"
-          >
+          <h1 className="mt-8 max-w-5xl font-display font-bold leading-[0.92] tracking-tight text-[var(--fg)] text-5xl md:text-7xl lg:text-[5.5rem] fade-rise">
             B2B software,{" "}
             <span className="text-gradient">honestly</span>
             <br className="hidden md:block" /> compared.
@@ -92,7 +97,6 @@ export default async function HomePage() {
             </Link>
           </div>
 
-          {/* Stats row */}
           <div
             className="mt-14 grid grid-cols-2 gap-6 border-t border-[var(--border)] pt-8 sm:grid-cols-4 fade-rise"
             style={{ animationDelay: "360ms" }}
@@ -100,7 +104,7 @@ export default async function HomePage() {
             <Stat label="Categories" value={categories.length} />
             <Stat label="Vendors" value={vendorCount} />
             <Stat label="Comparisons" value={comparisonCount} />
-            <Stat label="Pay-to-rank" value="0" suffix="" highlight />
+            <Stat label="Pay-to-rank" value="0" highlight />
           </div>
         </div>
       </section>
@@ -108,7 +112,7 @@ export default async function HomePage() {
       {/* Marquee */}
       <VendorMarquee vendors={marqueeVendors} label="We cover" />
 
-      {/* CATEGORIES - bento grid */}
+      {/* CATEGORIES - pastel bento */}
       <section className="container-x py-24">
         <SectionHead
           eyebrow="The library"
@@ -122,22 +126,28 @@ export default async function HomePage() {
         <div className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {categories.map((c, i) => {
             const featured = c.vendors[0];
+            const tint = PASTELS[i % PASTELS.length];
             return (
               <Link
                 key={c.slug}
                 href={`/${c.slug}`}
-                className="group card glow-spotlight relative flex h-full flex-col justify-between rounded-2xl p-6"
+                className="group card relative flex h-full flex-col justify-between p-6 overflow-hidden"
               >
-                <div>
+                <span
+                  className="absolute -right-12 -top-12 h-40 w-40 rounded-full opacity-70 transition-transform duration-300 group-hover:scale-110"
+                  style={{ background: tint }}
+                  aria-hidden
+                />
+                <div className="relative">
                   <div className="flex items-center justify-between">
                     <span className="chip chip-accent">
                       No. {(i + 1).toString().padStart(2, "0")}
                     </span>
-                    <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--fg-subtle)]">
+                    <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--fg-muted)]">
                       {c._count.vendors} reviewed
                     </span>
                   </div>
-                  <h3 className="mt-4 font-display text-2xl font-semibold leading-[1.1] tracking-tight text-[var(--fg)] group-hover:text-[var(--accent)] transition-colors">
+                  <h3 className="mt-5 font-display text-2xl font-bold leading-[1.1] tracking-tight text-[var(--fg)]">
                     {c.name}
                   </h3>
                   <p className="mt-3 line-clamp-3 text-[14px] leading-relaxed text-[var(--fg-muted)]">
@@ -146,13 +156,13 @@ export default async function HomePage() {
                 </div>
 
                 {featured ? (
-                  <div className="mt-6 flex items-center gap-3 border-t border-dashed border-[var(--border)] pt-4">
+                  <div className="relative mt-6 flex items-center gap-3 rounded-xl border border-[var(--border)] bg-[var(--bg)] p-3 shadow-warm">
                     <VendorLogo vendor={featured} size={32} rounded="md" />
                     <div className="min-w-0 flex-1">
-                      <p className="font-mono text-[9px] uppercase tracking-[0.22em] text-[var(--fg-subtle)]">
+                      <p className="font-mono text-[9px] uppercase tracking-[0.22em] text-[var(--accent-deep)]">
                         Editor pick
                       </p>
-                      <span className="font-display text-sm font-semibold text-[var(--fg)]">
+                      <span className="font-display text-sm font-bold text-[var(--fg)]">
                         {featured.name}
                       </span>
                     </div>
@@ -160,7 +170,7 @@ export default async function HomePage() {
                   </div>
                 ) : null}
 
-                <div className="mt-5 flex items-center justify-between">
+                <div className="relative mt-5 flex items-center justify-between">
                   <div className="flex -space-x-2">
                     {c.vendors.slice(0, 4).map((v) => (
                       <VendorLogo
@@ -168,16 +178,16 @@ export default async function HomePage() {
                         vendor={v}
                         size={26}
                         rounded="full"
-                        className="ring-2 ring-[var(--bg-elev)]"
+                        className="ring-2 ring-[var(--bg)]"
                       />
                     ))}
                     {c._count.vendors > 4 ? (
-                      <span className="z-10 inline-flex h-[26px] w-[26px] items-center justify-center rounded-full bg-[var(--accent)] font-mono text-[9px] font-medium text-[var(--bg)] ring-2 ring-[var(--bg-elev)]">
+                      <span className="z-10 inline-flex h-[26px] w-[26px] items-center justify-center rounded-full bg-[var(--accent)] font-mono text-[9px] font-bold text-white ring-2 ring-[var(--bg)]">
                         +{c._count.vendors - 4}
                       </span>
                     ) : null}
                   </div>
-                  <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--fg-subtle)] transition-colors group-hover:text-[var(--accent)]">
+                  <span className="font-mono text-[10px] uppercase tracking-[0.2em] font-semibold text-[var(--fg-subtle)] transition-colors group-hover:text-[var(--accent)]">
                     Browse →
                   </span>
                 </div>
@@ -188,7 +198,7 @@ export default async function HomePage() {
       </section>
 
       {/* TOP PICKS */}
-      <section className="border-y border-[var(--border)] bg-[var(--bg-elev)]/40">
+      <section className="border-y border-[var(--border)] bg-[var(--bg-elev)]">
         <div className="container-x py-24">
           <SectionHead
             eyebrow="Editor's picks"
@@ -205,14 +215,14 @@ export default async function HomePage() {
               <Link
                 key={v.id}
                 href={`/${v.category.slug}/${v.slug}`}
-                className="group card glow-spotlight relative flex items-start gap-4 rounded-2xl p-5"
+                className="group card relative flex items-start gap-4 p-5 overflow-hidden"
               >
-                <span className="absolute left-0 top-0 rounded-tl-2xl rounded-br-md bg-[var(--accent)] px-2 py-0.5 font-mono text-[9px] font-medium uppercase tracking-[0.22em] text-[var(--bg)]">
+                <span className="absolute left-0 top-0 rounded-tl-2xl rounded-br-md bg-[var(--accent)] px-2 py-0.5 font-mono text-[9px] font-bold uppercase tracking-[0.22em] text-white">
                   No. {(i + 1).toString().padStart(2, "0")}
                 </span>
                 <VendorLogo vendor={v} size={56} rounded="md" className="mt-3" />
                 <div className="mt-3 min-w-0 flex-1">
-                  <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--accent)]">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--accent-deep)] font-semibold">
                     {v.category.name}
                   </p>
                   <h3 className="mt-1 font-display text-xl font-bold leading-tight text-[var(--fg)] group-hover:text-[var(--accent)] transition-colors">
@@ -246,22 +256,22 @@ export default async function HomePage() {
               <li key={c.id}>
                 <Link
                   href={`/compare/${c.slug}`}
-                  className="group card glow-spotlight flex items-center justify-between gap-3 rounded-xl px-5 py-4"
+                  className="group card flex items-center justify-between gap-3 px-5 py-4"
                 >
                   <div className="flex items-center gap-3">
                     <VendorLogo vendor={c.vendorA} size={32} rounded="md" />
-                    <span className="font-display text-base font-semibold text-[var(--fg)]">
+                    <span className="font-display text-base font-bold text-[var(--fg)]">
                       {c.vendorA.name}
                     </span>
-                    <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--accent)]">
+                    <span className="font-mono text-[10px] uppercase tracking-[0.22em] font-bold text-[var(--accent)]">
                       vs
                     </span>
-                    <span className="font-display text-base font-semibold text-[var(--fg)]">
+                    <span className="font-display text-base font-bold text-[var(--fg)]">
                       {c.vendorB.name}
                     </span>
                     <VendorLogo vendor={c.vendorB} size={32} rounded="md" />
                   </div>
-                  <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--fg-subtle)] transition-colors group-hover:text-[var(--accent)]">
+                  <span className="font-mono text-[10px] uppercase tracking-[0.22em] font-semibold text-[var(--fg-subtle)] transition-colors group-hover:text-[var(--accent)]">
                     Read →
                   </span>
                 </Link>
@@ -272,8 +282,9 @@ export default async function HomePage() {
       ) : null}
 
       {/* TRUST */}
-      <section className="relative overflow-hidden border-t border-[var(--border)] bg-[var(--bg-elev)]">
-        <div className="absolute inset-0 glow-radial opacity-60" aria-hidden />
+      <section className="relative overflow-hidden border-t border-[var(--border)] bg-[var(--bg-elev-2)]">
+        <div className="absolute -right-32 -top-32 h-[400px] w-[400px] rounded-full opacity-50" style={{ background: "radial-gradient(circle, var(--pastel-peach), transparent 70%)" }} aria-hidden />
+        <div className="absolute -left-32 -bottom-32 h-[400px] w-[400px] rounded-full opacity-50" style={{ background: "radial-gradient(circle, var(--pastel-coral), transparent 70%)" }} aria-hidden />
         <div className="relative container-x py-24">
           <div className="grid gap-12 md:grid-cols-[1fr_1fr] md:items-end">
             <div>
@@ -309,12 +320,10 @@ export default async function HomePage() {
 function Stat({
   label,
   value,
-  suffix = "",
   highlight,
 }: {
   label: string;
   value: number | string;
-  suffix?: string;
   highlight?: boolean;
 }) {
   return (
@@ -325,9 +334,8 @@ function Stat({
         }`}
       >
         {typeof value === "number" ? value.toLocaleString() : value}
-        {suffix}
       </p>
-      <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--fg-muted)]">
+      <p className="mt-3 font-mono text-[10px] font-semibold uppercase tracking-[0.22em] text-[var(--fg-muted)]">
         {label}
       </p>
     </div>
@@ -352,7 +360,7 @@ function SectionHead({
         </h2>
       </div>
       {aside ? (
-        <span className="hidden font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--fg-subtle)] sm:block">
+        <span className="hidden font-mono text-[10px] font-semibold uppercase tracking-[0.22em] text-[var(--fg-subtle)] sm:block">
           {aside}
         </span>
       ) : null}

@@ -44,10 +44,10 @@ export function SiteFooter() {
         <div className="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
           <div>
             <Link href="/" className="flex items-center gap-2.5">
-              <span className="inline-flex h-7 w-7 items-center justify-center rounded-md bg-[var(--accent)] text-[var(--bg)]">
-                <span className="font-display font-bold text-sm leading-none">/</span>
+              <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-[var(--accent)] text-white shadow-warm">
+                <span className="font-display font-bold text-base leading-none">/</span>
               </span>
-              <span className="font-display text-base font-semibold tracking-tight text-[var(--fg)]">
+              <span className="font-display text-base font-bold tracking-tight text-[var(--fg)]">
                 The Hub
               </span>
             </Link>
@@ -55,14 +55,14 @@ export function SiteFooter() {
               B2B software, honestly compared. Independent scores, real pros and cons,
               no fake awards. Built for buyers who do their own homework.
             </p>
-            <div className="mt-6 flex items-center gap-2 text-xs text-[var(--fg-subtle)]">
+            <div className="mt-6 flex items-center gap-2 text-xs text-[var(--fg-muted)]">
               <span className="inline-flex h-1.5 w-1.5 rounded-full bg-[var(--accent)] pulse-dot" aria-hidden />
               <span className="font-mono uppercase tracking-[0.18em]">Updated quarterly</span>
             </div>
           </div>
           {COLUMNS.map((col) => (
             <div key={col.title}>
-              <h3 className="font-mono text-[10px] font-medium uppercase tracking-[0.22em] text-[var(--fg-subtle)]">
+              <h3 className="font-mono text-[10px] font-semibold uppercase tracking-[0.22em] text-[var(--accent-deep)]">
                 {col.title}
               </h3>
               <ul className="mt-4 space-y-2.5 text-[13px]">
@@ -81,7 +81,7 @@ export function SiteFooter() {
           ))}
         </div>
 
-        <div className="mt-12 flex flex-wrap items-center justify-between gap-4 border-t border-[var(--border)] pt-6 text-xs text-[var(--fg-subtle)]">
+        <div className="mt-12 flex flex-wrap items-center justify-between gap-4 border-t border-[var(--border)] pt-6 text-xs text-[var(--fg-muted)]">
           <p>(c) {year} The Hub. Editorial scores are our own. Some links may be sponsored.</p>
           <p className="font-mono uppercase tracking-[0.2em]">Independent · Honest · Useful</p>
         </div>

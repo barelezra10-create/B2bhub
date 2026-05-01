@@ -14,14 +14,13 @@ export async function SiteHeader() {
   }
 
   return (
-    <header className="sticky top-0 z-40 border-b border-[var(--border)] bg-[var(--bg)]/80 backdrop-blur-md">
+    <header className="sticky top-0 z-40 border-b border-[var(--border)] bg-[var(--bg)]/85 backdrop-blur-md">
       <div className="container-x flex items-center justify-between gap-6 py-4">
         <Link href="/" className="group flex items-center gap-2.5">
-          <span className="relative inline-flex h-7 w-7 items-center justify-center rounded-md bg-[var(--accent)] text-[var(--bg)]">
-            <span className="font-display font-bold text-sm leading-none">/</span>
-            <span className="absolute -right-0.5 -top-0.5 h-2 w-2 rounded-full bg-[var(--accent)] pulse-dot" aria-hidden />
+          <span className="relative inline-flex h-8 w-8 items-center justify-center rounded-lg bg-[var(--accent)] text-white shadow-warm">
+            <span className="font-display font-bold text-base leading-none">/</span>
           </span>
-          <span className="font-display text-base font-semibold tracking-tight text-[var(--fg)]">
+          <span className="font-display text-base font-bold tracking-tight text-[var(--fg)]">
             The Hub
           </span>
         </Link>
@@ -31,7 +30,7 @@ export async function SiteHeader() {
             <Link
               key={c.slug}
               href={`/${c.slug}`}
-              className="link-underline hover:text-[var(--fg)]"
+              className="link-underline hover:text-[var(--accent)]"
             >
               {c.name}
             </Link>
@@ -47,9 +46,6 @@ export async function SiteHeader() {
         </nav>
 
         <div className="flex items-center gap-3">
-          <Link href="/" className="hidden text-[13px] font-medium text-[var(--fg-muted)] hover:text-[var(--fg)] sm:inline">
-            All categories
-          </Link>
           <Link href="/" className="btn-primary">
             Find software
             <span aria-hidden>→</span>
