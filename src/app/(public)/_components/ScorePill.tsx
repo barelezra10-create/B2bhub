@@ -7,7 +7,7 @@ export function ScorePill({
 }) {
   if (score === null) {
     return (
-      <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-[var(--color-ink-subtle)]">
+      <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-[var(--fg-subtle)]">
         Unrated
       </span>
     );
@@ -20,23 +20,23 @@ export function ScorePill({
   } as const;
   const s = sizes[size];
 
-  // High scores get a gold-deep frame; lower a forest-soft one
+  // High = mint, mid = soft purple, low = muted
   const tone =
     score >= 8.5
-      ? "bg-[var(--color-gold)] text-[var(--color-ink)] border-[var(--color-gold-deep)]"
+      ? "bg-[var(--accent)] text-[var(--bg)] border-[var(--accent-deep)] shadow-[0_0_24px_-4px_var(--accent-glow)]"
       : score >= 7
-      ? "bg-[var(--color-forest)] text-[var(--color-cream)] border-[var(--color-forest-deep)]"
-      : "bg-[var(--color-cream-soft)] text-[var(--color-ink-soft)] border-[var(--color-rule)]";
+      ? "bg-[var(--bg-elev-2)] text-[var(--accent)] border-[var(--accent)]"
+      : "bg-[var(--bg-elev)] text-[var(--fg-muted)] border-[var(--border)]";
 
   return (
     <span
-      className={`relative inline-flex flex-col items-center justify-center border ${tone} ${s.box} score-pop`}
+      className={`relative inline-flex flex-col items-center justify-center rounded-md border ${tone} ${s.box} score-pop`}
       aria-label={`Score ${score.toFixed(1)} out of 10`}
     >
       <span className={`font-mono font-semibold leading-none ${s.num}`}>
         {score.toFixed(1)}
       </span>
-      <span className={`mt-0.5 font-mono uppercase tracking-[0.15em] opacity-75 ${s.suf}`}>
+      <span className={`mt-0.5 font-mono uppercase tracking-[0.15em] opacity-60 ${s.suf}`}>
         / 10
       </span>
     </span>

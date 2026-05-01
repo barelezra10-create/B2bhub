@@ -15,12 +15,12 @@ export function VendorLogo({
   const url = logoUrlFor(vendor);
   const radius =
     rounded === "none" ? "rounded-none" :
-    rounded === "sm" ? "rounded-sm" :
-    rounded === "md" ? "rounded-md" :
-    rounded === "lg" ? "rounded-lg" :
+    rounded === "sm" ? "rounded" :
+    rounded === "md" ? "rounded-lg" :
+    rounded === "lg" ? "rounded-xl" :
     "rounded-full";
 
-  // Fallback shows two-letter initials in a forest/cream box
+  // Two-letter initials fallback
   const initials = vendor.name
     .split(/\s+/)
     .filter(Boolean)
@@ -31,8 +31,8 @@ export function VendorLogo({
   if (!url) {
     return (
       <div
-        className={`${radius} flex items-center justify-center bg-[var(--color-forest)] text-[var(--color-cream)] font-display font-semibold ${className}`}
-        style={{ width: size, height: size, fontSize: size * 0.35 }}
+        className={`${radius} flex items-center justify-center bg-[var(--bg-elev-2)] text-[var(--accent)] font-display font-bold border border-[var(--border)] ${className}`}
+        style={{ width: size, height: size, fontSize: size * 0.36 }}
         aria-label={`${vendor.name} logo`}
       >
         {initials}
@@ -42,8 +42,8 @@ export function VendorLogo({
 
   return (
     <span
-      className={`relative inline-flex items-center justify-center bg-[var(--color-cream-soft)] ${radius} overflow-hidden ${className}`}
-      style={{ width: size, height: size }}
+      className={`relative inline-flex flex-shrink-0 items-center justify-center ${radius} bg-white border border-[var(--border)] overflow-hidden ${className}`}
+      style={{ width: size, height: size, padding: Math.round(size * 0.12) }}
     >
       <img
         src={url}

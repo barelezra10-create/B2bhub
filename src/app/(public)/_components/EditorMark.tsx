@@ -30,10 +30,10 @@ export function EditorMark({
  */
 export function SectionBreak({ className = "" }: { className?: string }) {
   return (
-    <div className={`my-12 flex items-center gap-4 text-[var(--color-forest)] ${className}`}>
-      <span className="h-px flex-1 bg-[var(--color-rule)]" />
+    <div className={`my-12 flex items-center gap-4 text-[var(--accent)] ${className}`}>
+      <span className="h-px flex-1 bg-[var(--border)]" />
       <EditorMark size={10} />
-      <span className="h-px flex-1 bg-[var(--color-rule)]" />
+      <span className="h-px flex-1 bg-[var(--border)]" />
     </div>
   );
 }

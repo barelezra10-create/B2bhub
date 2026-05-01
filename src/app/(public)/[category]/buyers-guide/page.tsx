@@ -86,20 +86,20 @@ export default async function BuyerGuidePage({
         eyebrow={`Buyer's guide · ${category.name}`}
         title={guide.title}
         meta={
-          <div className="flex flex-wrap items-center gap-x-8 gap-y-3 border-t border-[var(--color-rule)] pt-6 text-sm text-[var(--color-ink-muted)]">
+          <div className="flex flex-wrap items-center gap-x-8 gap-y-3 border-t border-[var(--border)] pt-6 text-sm text-[var(--fg-muted)]">
             <span className="font-mono text-[11px] uppercase tracking-[0.22em]">
               Last reviewed{" "}
-              <span className="text-[var(--color-ink)]">{lastReviewed}</span>
+              <span className="text-[var(--fg)]">{lastReviewed}</span>
             </span>
             <Link
               href={`/${category.slug}`}
-              className="font-mono text-[11px] uppercase tracking-[0.22em] text-[var(--color-forest)] link-underline"
+              className="font-mono text-[11px] uppercase tracking-[0.22em] text-[var(--accent)] link-underline"
             >
               ← {category.name}
             </Link>
             <Link
               href={`/${category.slug}/best`}
-              className="font-mono text-[11px] uppercase tracking-[0.22em] text-[var(--color-forest)] link-underline"
+              className="font-mono text-[11px] uppercase tracking-[0.22em] text-[var(--accent)] link-underline"
             >
               See the top {Math.min(10, category.vendors.length)} →
             </Link>
@@ -116,10 +116,10 @@ export default async function BuyerGuidePage({
         {/* Sticky sidebar with editor's picks */}
         <aside className="hidden md:block">
           <div className="sticky top-6">
-            <h3 className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--color-forest)]">
+            <h3 className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--accent)]">
               Editor&apos;s shortlist
             </h3>
-            <p className="mt-2 font-display text-xl font-semibold leading-tight text-[var(--color-ink)]">
+            <p className="mt-2 font-display text-xl font-semibold leading-tight text-[var(--fg)]">
               Our top {top3.length} picks
             </p>
             <ul className="mt-5 space-y-3">
@@ -127,10 +127,10 @@ export default async function BuyerGuidePage({
                 <li key={v.id}>
                   <Link
                     href={`/${category.slug}/${v.slug}`}
-                    className="group flex items-start gap-3 border border-[var(--color-rule)] bg-[var(--color-cream)] p-3 card-lift"
+                    className="group flex items-start gap-3 border border-[var(--border)] bg-[var(--bg)] p-3 card glow-spotlight rounded-xl"
                   >
                     <span
-                      className="font-display text-2xl font-semibold leading-none text-[var(--color-forest)]"
+                      className="font-display text-2xl font-semibold leading-none text-[var(--accent)]"
                       style={{ fontVariationSettings: "'opsz' 144, 'WONK' 1" }}
                     >
                       {(i + 1).toString().padStart(2, "0")}
@@ -138,7 +138,7 @@ export default async function BuyerGuidePage({
                     <div className="min-w-0 flex-1">
                       <div className="flex items-center gap-2">
                         <VendorLogo vendor={v} size={20} rounded="md" />
-                        <span className="font-display text-sm font-semibold leading-tight text-[var(--color-ink)] group-hover:text-[var(--color-forest)]">
+                        <span className="font-display text-sm font-semibold leading-tight text-[var(--fg)] group-hover:text-[var(--accent)]">
                           {v.name}
                         </span>
                       </div>
@@ -152,7 +152,7 @@ export default async function BuyerGuidePage({
             </ul>
             <Link
               href={`/${category.slug}/best`}
-              className="mt-5 inline-flex w-full items-center justify-center gap-2 bg-[var(--color-forest)] px-3 py-2.5 font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--color-cream)] hover:bg-[var(--color-forest-deep)]"
+              className="mt-5 inline-flex w-full items-center justify-center gap-2 bg-[var(--accent)] px-3 py-2.5 font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--bg)] hover:bg-[var(--accent-deep)]"
             >
               See full ranking →
             </Link>

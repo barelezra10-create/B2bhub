@@ -99,21 +99,21 @@ export default async function CategoryPage({
         title={category.name}
         description={category.description}
         meta={
-          <div className="flex flex-wrap items-center gap-x-10 gap-y-4 border-t border-[var(--color-rule)] pt-6">
+          <div className="flex flex-wrap items-center gap-x-10 gap-y-4 border-t border-[var(--border)] pt-6">
             <Stat label="Vendors covered" value={sortedVendors.length} />
             {avgScore > 0 ? (
               <Stat label="Avg editorial score" value={avgScore.toFixed(1)} />
             ) : null}
             <Link
               href={`/${category.slug}/best`}
-              className="font-mono text-[11px] uppercase tracking-[0.22em] text-[var(--color-forest)] link-underline"
+              className="font-mono text-[11px] uppercase tracking-[0.22em] text-[var(--accent)] link-underline"
             >
               See the top {Math.min(10, sortedVendors.length)} →
             </Link>
             {guide ? (
               <Link
                 href={`/${category.slug}/buyers-guide`}
-                className="font-mono text-[11px] uppercase tracking-[0.22em] text-[var(--color-forest)] link-underline"
+                className="font-mono text-[11px] uppercase tracking-[0.22em] text-[var(--accent)] link-underline"
               >
                 Buyer&apos;s guide →
               </Link>
@@ -126,18 +126,18 @@ export default async function CategoryPage({
         {/* Top 3 podium */}
         {top3.length > 0 ? (
           <section className="mb-16">
-            <header className="mb-6 flex items-end justify-between gap-4 border-b border-[var(--color-rule)] pb-4">
+            <header className="mb-6 flex items-end justify-between gap-4 border-b border-[var(--border)] pb-4">
               <div>
-                <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--color-forest)]">
+                <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--accent)]">
                   Editor&apos;s shortlist
                 </p>
-                <h2 className="mt-2 font-display text-3xl font-semibold leading-tight text-[var(--color-ink)]">
+                <h2 className="mt-2 font-display text-3xl font-semibold leading-tight text-[var(--fg)]">
                   Top 3 in {category.name.toLowerCase()}
                 </h2>
               </div>
               <Link
                 href={`/${category.slug}/best`}
-                className="hidden font-mono text-[11px] uppercase tracking-[0.22em] text-[var(--color-forest)] link-underline sm:inline-block"
+                className="hidden font-mono text-[11px] uppercase tracking-[0.22em] text-[var(--accent)] link-underline sm:inline-block"
               >
                 Full ranking →
               </Link>
@@ -152,24 +152,24 @@ export default async function CategoryPage({
                   <li key={v.id}>
                     <Link
                       href={`/${category.slug}/${v.slug}`}
-                      className="group relative flex h-full flex-col border border-[var(--color-rule)] bg-[var(--color-cream)] p-6 card-lift"
+                      className="group relative flex h-full flex-col border border-[var(--border)] bg-[var(--bg)] p-6 card glow-spotlight rounded-xl"
                     >
                       <div className="flex items-center justify-between">
                         <span
-                          className="font-display text-6xl font-semibold leading-none text-[var(--color-forest)]"
+                          className="font-display text-6xl font-semibold leading-none text-[var(--accent)]"
                           style={{ fontVariationSettings: "'opsz' 144, 'WONK' 1" }}
                         >
                           {rank.toString().padStart(2, "0")}
                         </span>
                         <ScorePill score={v.ourScore} size="md" />
                       </div>
-                      <span className="mt-4 inline-flex w-fit items-center border border-[var(--color-gold-deep)] bg-[var(--color-gold-soft)] px-2 py-0.5 font-mono text-[9px] uppercase tracking-[0.22em] text-[var(--color-gold-deep)]">
+                      <span className="mt-4 inline-flex w-fit items-center border border-[var(--gold)] bg-[var(--bg-elev-2)] px-2 py-0.5 font-mono text-[9px] uppercase tracking-[0.22em] text-[var(--gold)]">
                         {ribbon}
                       </span>
                       <div className="mt-5 flex items-center gap-3">
                         <VendorLogo vendor={v} size={44} rounded="md" />
                         <div className="min-w-0 flex-1">
-                          <h3 className="font-display text-xl font-semibold leading-tight text-[var(--color-ink)] group-hover:text-[var(--color-forest)]">
+                          <h3 className="font-display text-xl font-semibold leading-tight text-[var(--fg)] group-hover:text-[var(--accent)]">
                             {v.name}
                           </h3>
                           {v.sponsorTier !== "none" ? (
@@ -178,7 +178,7 @@ export default async function CategoryPage({
                         </div>
                       </div>
                       {v.tagline ? (
-                        <p className="mt-3 line-clamp-3 text-[14px] leading-relaxed text-[var(--color-ink-muted)]">
+                        <p className="mt-3 line-clamp-3 text-[14px] leading-relaxed text-[var(--fg-muted)]">
                           {v.tagline}
                         </p>
                       ) : null}
@@ -194,10 +194,10 @@ export default async function CategoryPage({
         {featured.length > 0 ? (
           <section className="mb-16">
             <header className="mb-4 flex items-center gap-3">
-              <h3 className="font-mono text-[11px] uppercase tracking-[0.22em] text-[var(--color-gold-deep)]">
+              <h3 className="font-mono text-[11px] uppercase tracking-[0.22em] text-[var(--gold)]">
                 Featured partners
               </h3>
-              <span className="h-px flex-1 bg-[var(--color-gold-soft)]" aria-hidden />
+              <span className="h-px flex-1 bg-[var(--bg-elev-2)]" aria-hidden />
             </header>
             <div className="grid gap-5 md:grid-cols-3">
               {featured.map((v) => (
@@ -215,12 +215,12 @@ export default async function CategoryPage({
 
         {/* All vendors grid */}
         <section>
-          <header className="mb-6 flex items-end justify-between gap-4 border-b border-[var(--color-rule)] pb-4">
+          <header className="mb-6 flex items-end justify-between gap-4 border-b border-[var(--border)] pb-4">
             <div>
-              <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--color-forest)]">
+              <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--accent)]">
                 The full directory
               </p>
-              <h2 className="mt-2 font-display text-3xl font-semibold leading-tight text-[var(--color-ink)]">
+              <h2 className="mt-2 font-display text-3xl font-semibold leading-tight text-[var(--fg)]">
                 All {sortedVendors.length} {category.name.toLowerCase()}, ranked
               </h2>
             </div>
@@ -247,10 +247,10 @@ export default async function CategoryPage({
 function Stat({ label, value }: { label: string; value: number | string }) {
   return (
     <div>
-      <p className="font-display text-2xl font-semibold leading-none text-[var(--color-ink)]">
+      <p className="font-display text-2xl font-semibold leading-none text-[var(--fg)]">
         {typeof value === "number" ? value.toLocaleString() : value}
       </p>
-      <p className="mt-1 font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--color-ink-muted)]">
+      <p className="mt-1 font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--fg-muted)]">
         {label}
       </p>
     </div>

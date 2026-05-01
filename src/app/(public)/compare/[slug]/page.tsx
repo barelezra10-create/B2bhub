@@ -183,13 +183,12 @@ export default async function ComparisonPage({
         ])}
       />
 
-      {/* Full-bleed forest hero */}
-      <section className="relative overflow-hidden bg-[var(--color-forest)] text-[var(--color-cream)]">
-        <div className="absolute inset-0 shine" aria-hidden />
-        <div className="absolute inset-0 paper-grain opacity-60" aria-hidden />
-        <div className="relative mx-auto max-w-6xl px-6 py-20 md:py-28">
-          <p className="mb-8 font-mono text-[10px] uppercase tracking-[0.28em] text-[var(--color-gold)]">
-            <span className="inline-block h-px w-8 bg-[var(--color-gold)] align-middle mr-2" aria-hidden />
+      {/* Hero - dark with mint accents */}
+      <section className="relative overflow-hidden border-b border-[var(--border)] bg-[var(--bg)]">
+        <div className="absolute inset-0 glow-radial" aria-hidden />
+        <div className="absolute inset-0 grid-overlay opacity-50" aria-hidden />
+        <div className="relative container-x py-20 md:py-28">
+          <p className="eyebrow mb-8">
             Side-by-side · {a.category.name} · {new Date().getFullYear()}
           </p>
 
@@ -203,26 +202,20 @@ export default async function ComparisonPage({
                 <ScorePill score={a.ourScore} size="lg" />
               </div>
               <div className="md:text-right">
-                <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--color-gold)] opacity-80">
+                <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--accent)]">
                   Contender A
                 </p>
-                <h2
-                  className="mt-2 font-display text-4xl font-semibold leading-[0.95] tracking-tight text-[var(--color-cream)] group-hover:text-[var(--color-gold)] md:text-6xl"
-                  style={{ fontVariationSettings: "'opsz' 144, 'SOFT' 50" }}
-                >
+                <h2 className="mt-2 font-display text-4xl font-bold leading-[0.95] tracking-tight text-[var(--fg)] group-hover:text-[var(--accent)] md:text-6xl">
                   {a.name}
                 </h2>
               </div>
             </Link>
 
-            <div className="flex flex-col items-center justify-center text-[var(--color-gold)]">
-              <span
-                className="font-display text-3xl italic md:text-4xl"
-                style={{ fontVariationSettings: "'opsz' 144, 'SOFT' 100" }}
-              >
+            <div className="flex flex-col items-center justify-center">
+              <span className="font-display text-3xl italic font-bold text-gradient md:text-4xl">
                 versus
               </span>
-              <span className="mt-3 h-16 w-px bg-[var(--color-gold)] opacity-50" aria-hidden />
+              <span className="mt-3 h-16 w-px bg-[var(--accent)] opacity-40" aria-hidden />
             </div>
 
             <Link
@@ -234,13 +227,10 @@ export default async function ComparisonPage({
                 <ScorePill score={b.ourScore} size="lg" />
               </div>
               <div>
-                <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--color-gold)] opacity-80">
+                <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--accent)]">
                   Contender B
                 </p>
-                <h2
-                  className="mt-2 font-display text-4xl font-semibold leading-[0.95] tracking-tight text-[var(--color-cream)] group-hover:text-[var(--color-gold)] md:text-6xl"
-                  style={{ fontVariationSettings: "'opsz' 144, 'SOFT' 50" }}
-                >
+                <h2 className="mt-2 font-display text-4xl font-bold leading-[0.95] tracking-tight text-[var(--fg)] group-hover:text-[var(--accent)] md:text-6xl">
                   {b.name}
                 </h2>
               </div>
@@ -248,7 +238,7 @@ export default async function ComparisonPage({
           </div>
 
           {cmp.hookCopy ? (
-            <p className="mt-10 max-w-3xl text-lg leading-relaxed text-[var(--color-cream)] opacity-90">
+            <p className="mt-10 max-w-3xl text-lg leading-relaxed text-[var(--fg-soft)]">
               {cmp.hookCopy}
             </p>
           ) : null}
@@ -259,38 +249,38 @@ export default async function ComparisonPage({
         {/* The verdict at-a-glance */}
         <section>
           <header className="mb-5 flex items-baseline gap-3">
-            <h2 className="font-display text-2xl font-semibold tracking-tight text-[var(--color-ink)]">
+            <h2 className="font-display text-2xl font-semibold tracking-tight text-[var(--fg)]">
               At a glance
             </h2>
-            <span className="h-px flex-1 bg-[var(--color-rule)]" aria-hidden />
-            <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--color-ink-muted)]">
+            <span className="h-px flex-1 bg-[var(--border)]" aria-hidden />
+            <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--fg-muted)]">
               {a.name} {aWins} · {b.name} {bWins}
             </span>
           </header>
-          <div className="border border-[var(--color-rule)] bg-[var(--color-cream)]">
+          <div className="border border-[var(--border)] bg-[var(--bg)]">
             {facetRows.map((r, i) => (
               <div
                 key={r.label}
-                className={`grid grid-cols-[120px_1fr_1fr] items-center gap-4 px-5 py-3 ${i > 0 ? "border-t border-[var(--color-rule-soft)]" : ""}`}
+                className={`grid grid-cols-[120px_1fr_1fr] items-center gap-4 px-5 py-3 ${i > 0 ? "border-t border-[var(--border-soft)]" : ""}`}
               >
-                <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--color-ink-muted)]">
+                <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--fg-muted)]">
                   {r.label}
                 </span>
                 <span
-                  className={`flex items-center gap-2 text-[15px] ${r.winner === "a" ? "text-[var(--color-ink)] font-semibold" : "text-[var(--color-ink-muted)]"}`}
+                  className={`flex items-center gap-2 text-[15px] ${r.winner === "a" ? "text-[var(--fg)] font-semibold" : "text-[var(--fg-muted)]"}`}
                 >
                   {r.winner === "a" ? (
-                    <span className="inline-block h-1.5 w-3 bg-[var(--color-forest)]" aria-hidden />
+                    <span className="inline-block h-1.5 w-3 bg-[var(--accent)]" aria-hidden />
                   ) : (
                     <span className="inline-block h-1.5 w-3" aria-hidden />
                   )}
                   {r.aValue}
                 </span>
                 <span
-                  className={`flex items-center gap-2 text-[15px] ${r.winner === "b" ? "text-[var(--color-ink)] font-semibold" : "text-[var(--color-ink-muted)]"}`}
+                  className={`flex items-center gap-2 text-[15px] ${r.winner === "b" ? "text-[var(--fg)] font-semibold" : "text-[var(--fg-muted)]"}`}
                 >
                   {r.winner === "b" ? (
-                    <span className="inline-block h-1.5 w-3 bg-[var(--color-forest)]" aria-hidden />
+                    <span className="inline-block h-1.5 w-3 bg-[var(--accent)]" aria-hidden />
                   ) : (
                     <span className="inline-block h-1.5 w-3" aria-hidden />
                   )}
@@ -304,12 +294,12 @@ export default async function ComparisonPage({
         {/* Where each wins (list view per Bar's request) */}
         <section className="mt-12">
           <header className="mb-5 flex items-baseline gap-3">
-            <h2 className="font-display text-2xl font-semibold tracking-tight text-[var(--color-ink)]">
+            <h2 className="font-display text-2xl font-semibold tracking-tight text-[var(--fg)]">
               Where each one wins
             </h2>
-            <span className="h-px flex-1 bg-[var(--color-rule)]" aria-hidden />
+            <span className="h-px flex-1 bg-[var(--border)]" aria-hidden />
           </header>
-          <div className="grid gap-px bg-[var(--color-rule)] md:grid-cols-2">
+          <div className="grid gap-px bg-[var(--border)] md:grid-cols-2">
             <WinsBlock vendor={a} winsCount={aWins} reasons={facetRows.filter((r) => r.winner === "a").map((r) => r.label)} pros={a.pros} />
             <WinsBlock vendor={b} winsCount={bWins} reasons={facetRows.filter((r) => r.winner === "b").map((r) => r.label)} pros={b.pros} />
           </div>
@@ -318,10 +308,10 @@ export default async function ComparisonPage({
         {/* Choose if blocks */}
         <section className="mt-12">
           <header className="mb-5 flex items-baseline gap-3">
-            <h2 className="font-display text-2xl font-semibold tracking-tight text-[var(--color-ink)]">
+            <h2 className="font-display text-2xl font-semibold tracking-tight text-[var(--fg)]">
               How to choose
             </h2>
-            <span className="h-px flex-1 bg-[var(--color-rule)]" aria-hidden />
+            <span className="h-px flex-1 bg-[var(--border)]" aria-hidden />
           </header>
           <div className="grid gap-5 md:grid-cols-2">
             <ChooseBlock
@@ -355,8 +345,8 @@ export default async function ComparisonPage({
 
         {/* Editorial summary */}
         {cmp.summaryCopy ? (
-          <section className="mt-12 border border-[var(--color-rule)] bg-[var(--color-cream-soft)] p-8">
-            <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--color-forest)]">
+          <section className="mt-12 border border-[var(--border)] bg-[var(--bg-elev)] p-8">
+            <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--accent)]">
               Quick verdict
             </p>
             <div className="mt-4 dropcap">
@@ -368,10 +358,10 @@ export default async function ComparisonPage({
         {/* Pros / cons side by side */}
         <section className="mt-12">
           <header className="mb-5 flex items-baseline gap-3">
-            <h2 className="font-display text-2xl font-semibold tracking-tight text-[var(--color-ink)]">
+            <h2 className="font-display text-2xl font-semibold tracking-tight text-[var(--fg)]">
               The full pros & cons
             </h2>
-            <span className="h-px flex-1 bg-[var(--color-rule)]" aria-hidden />
+            <span className="h-px flex-1 bg-[var(--border)]" aria-hidden />
           </header>
           <div className="grid gap-5 md:grid-cols-2">
             <ProsConsBlock vendor={a} />
@@ -381,8 +371,8 @@ export default async function ComparisonPage({
 
         {/* Verdict copy */}
         {cmp.verdictCopy ? (
-          <section className="mt-12 border-t border-b border-[var(--color-rule)] py-10">
-            <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--color-forest)]">
+          <section className="mt-12 border-t border-b border-[var(--border)] py-10">
+            <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--accent)]">
               Our verdict
             </p>
             <div className="mt-4 max-w-3xl">
@@ -395,32 +385,32 @@ export default async function ComparisonPage({
         {related.length > 0 ? (
           <section className="mt-12">
             <header className="mb-5 flex items-baseline gap-3">
-              <h2 className="font-display text-2xl font-semibold tracking-tight text-[var(--color-ink)]">
+              <h2 className="font-display text-2xl font-semibold tracking-tight text-[var(--fg)]">
                 Related comparisons
               </h2>
-              <span className="h-px flex-1 bg-[var(--color-rule)]" aria-hidden />
+              <span className="h-px flex-1 bg-[var(--border)]" aria-hidden />
             </header>
             <ul className="grid gap-3 sm:grid-cols-2">
               {related.map((c) => (
                 <li key={c.id}>
                   <Link
                     href={`/compare/${c.slug}`}
-                    className="group flex items-center justify-between gap-3 border border-[var(--color-rule)] bg-[var(--color-cream)] px-5 py-4 card-lift"
+                    className="group flex items-center justify-between gap-3 border border-[var(--border)] bg-[var(--bg)] px-5 py-4 card glow-spotlight rounded-xl"
                   >
                     <span className="flex items-center gap-3">
                       <VendorLogo vendor={c.vendorA} size={28} rounded="md" />
-                      <span className="font-display text-sm font-semibold text-[var(--color-ink)]">
+                      <span className="font-display text-sm font-semibold text-[var(--fg)]">
                         {c.vendorA.name}
                       </span>
-                      <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--color-ink-subtle)]">
+                      <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--fg-subtle)]">
                         vs
                       </span>
-                      <span className="font-display text-sm font-semibold text-[var(--color-ink)]">
+                      <span className="font-display text-sm font-semibold text-[var(--fg)]">
                         {c.vendorB.name}
                       </span>
                       <VendorLogo vendor={c.vendorB} size={28} rounded="md" />
                     </span>
-                    <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--color-forest)] opacity-0 transition-opacity group-hover:opacity-100">
+                    <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--accent)] opacity-0 transition-opacity group-hover:opacity-100">
                       Read →
                     </span>
                   </Link>
@@ -446,28 +436,28 @@ function WinsBlock({
   pros: string[];
 }) {
   return (
-    <div className="bg-[var(--color-cream)] p-6">
+    <div className="bg-[var(--bg)] p-6">
       <div className="flex items-center gap-3">
         <VendorLogo vendor={vendor} size={36} rounded="md" />
         <div>
-          <h3 className="font-display text-xl font-semibold leading-tight text-[var(--color-ink)]">
+          <h3 className="font-display text-xl font-semibold leading-tight text-[var(--fg)]">
             {vendor.name}
           </h3>
-          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--color-forest)]">
+          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--accent)]">
             Wins {winsCount} of 7 facets
           </p>
         </div>
       </div>
       {reasons.length > 0 ? (
         <div className="mt-5">
-          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--color-ink-muted)]">
+          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--fg-muted)]">
             Wins on
           </p>
           <ul className="mt-2 flex flex-wrap gap-1.5">
             {reasons.map((r) => (
               <li
                 key={r}
-                className="border border-[var(--color-forest)] px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.18em] text-[var(--color-forest)]"
+                className="border border-[var(--accent)] px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.18em] text-[var(--accent)]"
               >
                 {r}
               </li>
@@ -475,15 +465,15 @@ function WinsBlock({
           </ul>
         </div>
       ) : (
-        <p className="mt-5 font-mono text-[11px] uppercase tracking-[0.22em] text-[var(--color-ink-subtle)]">
+        <p className="mt-5 font-mono text-[11px] uppercase tracking-[0.22em] text-[var(--fg-subtle)]">
           No facet wins, but strong on:
         </p>
       )}
       {pros.length > 0 ? (
-        <ul className="mt-4 space-y-2 text-[14px] text-[var(--color-ink)]">
+        <ul className="mt-4 space-y-2 text-[14px] text-[var(--fg)]">
           {pros.slice(0, 3).map((p) => (
             <li key={p} className="flex gap-3">
-              <span className="mt-2 inline-block h-1 w-3 flex-shrink-0 bg-[var(--color-forest)]" aria-hidden />
+              <span className="mt-2 inline-block h-1 w-3 flex-shrink-0 bg-[var(--accent)]" aria-hidden />
               <span>{p}</span>
             </li>
           ))}
@@ -503,17 +493,17 @@ function ChooseBlock({
   points: string[];
 }) {
   return (
-    <div className="border border-[var(--color-rule)] bg-[var(--color-cream)] p-6">
+    <div className="border border-[var(--border)] bg-[var(--bg)] p-6">
       <div className="flex items-center gap-3">
         <VendorLogo vendor={vendor} size={36} rounded="md" />
-        <h3 className="font-display text-xl font-semibold tracking-tight text-[var(--color-ink)]">
+        <h3 className="font-display text-xl font-semibold tracking-tight text-[var(--fg)]">
           {label}
         </h3>
       </div>
-      <ul className="mt-4 space-y-2 text-[15px] text-[var(--color-ink)]">
+      <ul className="mt-4 space-y-2 text-[15px] text-[var(--fg)]">
         {points.map((p, i) => (
           <li key={`${i}-${p}`} className="flex gap-3">
-            <span className="mt-1 inline-flex h-5 w-5 flex-shrink-0 items-center justify-center bg-[var(--color-forest)] font-mono text-[10px] font-semibold text-[var(--color-cream)]">
+            <span className="mt-1 inline-flex h-5 w-5 flex-shrink-0 items-center justify-center bg-[var(--accent)] font-mono text-[10px] font-semibold text-[var(--bg)]">
               {(i + 1).toString().padStart(2, "0")}
             </span>
             <span>{p}</span>
@@ -522,7 +512,7 @@ function ChooseBlock({
       </ul>
       <Link
         href={`/${vendor.category.slug}/${vendor.slug}`}
-        className="mt-5 inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.22em] text-[var(--color-forest)] link-underline"
+        className="mt-5 inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.22em] text-[var(--accent)] link-underline"
       >
         Read full {vendor.name} review →
       </Link>
@@ -532,28 +522,28 @@ function ChooseBlock({
 
 function ProsConsBlock({ vendor }: { vendor: { name: string; pros: string[]; cons: string[] } }) {
   return (
-    <div className="border border-[var(--color-rule)] bg-[var(--color-cream)] p-6">
-      <h3 className="mb-4 font-display text-lg font-semibold leading-tight text-[var(--color-ink)]">
+    <div className="border border-[var(--border)] bg-[var(--bg)] p-6">
+      <h3 className="mb-4 font-display text-lg font-semibold leading-tight text-[var(--fg)]">
         {vendor.name}
       </h3>
-      <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--color-forest)]">
+      <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--accent)]">
         Pros
       </p>
-      <ul className="mb-5 mt-2 space-y-2 text-[14px] text-[var(--color-ink)]">
+      <ul className="mb-5 mt-2 space-y-2 text-[14px] text-[var(--fg)]">
         {vendor.pros.map((p) => (
           <li key={p} className="flex gap-3">
-            <span className="mt-2 inline-block h-1 w-3 flex-shrink-0 bg-[var(--color-forest)]" aria-hidden />
+            <span className="mt-2 inline-block h-1 w-3 flex-shrink-0 bg-[var(--accent)]" aria-hidden />
             <span>{p}</span>
           </li>
         ))}
       </ul>
-      <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--color-rust)]">
+      <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--danger)]">
         Cons
       </p>
-      <ul className="mt-2 space-y-2 text-[14px] text-[var(--color-ink)]">
+      <ul className="mt-2 space-y-2 text-[14px] text-[var(--fg)]">
         {vendor.cons.map((c) => (
           <li key={c} className="flex gap-3">
-            <span className="mt-2 inline-block h-1 w-3 flex-shrink-0 bg-[var(--color-rust)]" aria-hidden />
+            <span className="mt-2 inline-block h-1 w-3 flex-shrink-0 bg-[var(--danger)]" aria-hidden />
             <span>{c}</span>
           </li>
         ))}

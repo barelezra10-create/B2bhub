@@ -1,7 +1,11 @@
 /**
- * Vendor logo URL helper. Uses Clearbit's free Logo API
- * (https://logo.clearbit.com/{domain}) which serves a clean
- * square logo for almost every B2B vendor with a public site.
+ * Vendor logo URL helper. Uses Google's S2 favicon service
+ * (https://www.google.com/s2/favicons?domain={host}&sz=256)
+ * which returns a clean PNG for almost every public site.
+ *
+ * (Clearbit's free Logo API was retired in 2024 - their hostname
+ * no longer resolves. Google's favicon service is the most reliable
+ * always-on alternative.)
  *
  * If the vendor has an explicit logoUrl set in admin, prefer that.
  */
@@ -11,7 +15,7 @@ export function logoUrlFor(vendor: { websiteUrl: string; logoUrl?: string | null
     const url = new URL(vendor.websiteUrl);
     const host = url.hostname.replace(/^www\./, "");
     if (!host || host === "localhost") return null;
-    return `https://logo.clearbit.com/${host}`;
+    return `https://www.google.com/s2/favicons?domain=${host}&sz=256`;
   } catch {
     return null;
   }

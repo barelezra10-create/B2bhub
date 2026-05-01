@@ -38,20 +38,13 @@ export function VendorRankRow({
   const ribbon = RIBBONS[rank];
 
   return (
-    <article className="relative grid gap-6 border border-[var(--color-rule)] bg-[var(--color-cream)] p-7 md:grid-cols-[110px_1fr_auto] card-lift">
+    <article className="card glow-spotlight relative grid gap-6 rounded-2xl p-7 md:grid-cols-[110px_1fr_auto]">
       {/* Rank numeral */}
       <div className="flex flex-col items-start gap-2 md:items-center">
-        <span
-          className="font-display text-7xl font-semibold leading-[0.85] text-[var(--color-forest)] md:text-8xl"
-          style={{ fontVariationSettings: "'opsz' 144, 'WONK' 1" }}
-        >
+        <span className="font-display text-7xl font-bold leading-[0.85] text-gradient md:text-8xl">
           {rank.toString().padStart(2, "0")}
         </span>
-        {ribbon ? (
-          <span className="inline-flex items-center border border-[var(--color-gold-deep)] bg-[var(--color-gold-soft)] px-2 py-0.5 font-mono text-[9px] uppercase tracking-[0.22em] text-[var(--color-gold-deep)]">
-            {ribbon}
-          </span>
-        ) : null}
+        {ribbon ? <span className="chip chip-accent">{ribbon}</span> : null}
       </div>
 
       {/* Body */}
@@ -60,40 +53,40 @@ export function VendorRankRow({
           <VendorLogo vendor={vendor} size={40} rounded="md" />
           <Link
             href={href}
-            className="font-display text-2xl font-semibold leading-tight text-[var(--color-ink)] hover:text-[var(--color-forest)]"
+            className="font-display text-2xl font-bold leading-tight text-[var(--fg)] hover:text-[var(--accent)]"
           >
             {vendor.name}
           </Link>
           {sponsored ? <SponsoredBadge /> : null}
         </header>
         {vendor.tagline ? (
-          <p className="mt-2 text-[15px] leading-relaxed text-[var(--color-ink-soft)]">
+          <p className="mt-2 text-[15px] leading-relaxed text-[var(--fg-soft)]">
             {vendor.tagline}
           </p>
         ) : null}
 
         <dl className="mt-5 grid gap-4 sm:grid-cols-2">
           <div>
-            <dt className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--color-forest)]">
-              Pros
+            <dt className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--accent)]">
+              Strengths
             </dt>
-            <ul className="mt-2 space-y-1 text-sm text-[var(--color-ink)]">
+            <ul className="mt-2 space-y-1 text-sm text-[var(--fg-soft)]">
               {pros.slice(0, 3).map((p) => (
                 <li key={p} className="flex gap-2">
-                  <span className="mt-1.5 inline-block h-1 w-3 flex-shrink-0 bg-[var(--color-forest)]" aria-hidden />
+                  <span className="mt-1.5 inline-block h-1 w-3 flex-shrink-0 rounded-full bg-[var(--accent)]" aria-hidden />
                   <span>{p}</span>
                 </li>
               ))}
             </ul>
           </div>
           <div>
-            <dt className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--color-rust)]">
-              Cons
+            <dt className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--danger)]">
+              Trade-offs
             </dt>
-            <ul className="mt-2 space-y-1 text-sm text-[var(--color-ink)]">
+            <ul className="mt-2 space-y-1 text-sm text-[var(--fg-soft)]">
               {cons.slice(0, 3).map((c) => (
                 <li key={c} className="flex gap-2">
-                  <span className="mt-1.5 inline-block h-1 w-3 flex-shrink-0 bg-[var(--color-rust)]" aria-hidden />
+                  <span className="mt-1.5 inline-block h-1 w-3 flex-shrink-0 rounded-full bg-[var(--danger)]" aria-hidden />
                   <span>{c}</span>
                 </li>
               ))}
@@ -101,19 +94,19 @@ export function VendorRankRow({
           </div>
         </dl>
 
-        <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-2 border-t border-[var(--color-rule-soft)] pt-4 text-xs text-[var(--color-ink-muted)]">
+        <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-2 border-t border-[var(--border)] pt-4 text-xs text-[var(--fg-muted)]">
           <span className="font-mono uppercase tracking-[0.2em]">
             Best for{" "}
-            <span className="text-[var(--color-ink)]">{bestForLabel}</span>
+            <span className="text-[var(--fg)]">{bestForLabel}</span>
           </span>
           {pricingStartingAt ? (
             <span className="font-mono uppercase tracking-[0.2em]">
-              From <span className="text-[var(--color-ink)]">{pricingStartingAt}</span>
+              From <span className="text-[var(--fg)]">{pricingStartingAt}</span>
             </span>
           ) : null}
           <Link
             href={href}
-            className="ml-auto font-mono text-[11px] uppercase tracking-[0.22em] text-[var(--color-forest)] link-underline"
+            className="ml-auto font-mono text-[11px] uppercase tracking-[0.22em] text-[var(--accent)] link-underline"
           >
             Full review →
           </Link>

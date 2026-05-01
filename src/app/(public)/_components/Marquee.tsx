@@ -1,9 +1,5 @@
 import { VendorLogo } from "./VendorLogo";
 
-/**
- * Continuously scrolling rail of vendor names + logos. Used as a "covered by us"
- * trust ribbon. Doubles its content so the loop is seamless.
- */
 export function VendorMarquee({
   vendors,
   label = "We cover",
@@ -14,9 +10,9 @@ export function VendorMarquee({
   if (vendors.length === 0) return null;
   const doubled = [...vendors, ...vendors];
   return (
-    <section className="border-y border-[var(--color-rule)] bg-[var(--color-cream-soft)] py-5 overflow-hidden">
-      <div className="mx-auto flex max-w-6xl items-center gap-6 px-6">
-        <span className="flex-shrink-0 font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--color-forest)]">
+    <section className="border-y border-[var(--border)] bg-[var(--bg-elev)]/60 py-5 overflow-hidden">
+      <div className="container-x flex items-center gap-6">
+        <span className="flex-shrink-0 font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--accent)]">
           {label}
         </span>
         <div className="relative flex-1 overflow-hidden mask-fade">
@@ -24,9 +20,9 @@ export function VendorMarquee({
             {doubled.map((v, i) => (
               <span
                 key={`${v.name}-${i}`}
-                className="flex flex-shrink-0 items-center gap-3 text-[var(--color-ink)]"
+                className="flex flex-shrink-0 items-center gap-3 text-[var(--fg)]"
               >
-                <VendorLogo vendor={v} size={28} rounded="md" />
+                <VendorLogo vendor={v} size={28} rounded="sm" />
                 <span className="font-display text-base font-semibold whitespace-nowrap">
                   {v.name}
                 </span>

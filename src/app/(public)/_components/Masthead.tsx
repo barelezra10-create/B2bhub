@@ -22,11 +22,11 @@ export function Masthead({
     });
 
   return (
-    <div className="border-b border-[var(--color-rule)] bg-[var(--color-cream-soft)]">
-      <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-6 py-2.5 font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--color-ink-muted)]">
+    <div className="border-b border-[var(--border)] bg-[var(--bg-elev)]">
+      <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-6 py-2.5 font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--fg-muted)]">
         <span>Volume {volume}</span>
         {issue ? <span className="hidden sm:inline">Issue {issue}</span> : null}
-        <span className="hidden md:inline text-[var(--color-forest)]">
+        <span className="hidden md:inline text-[var(--accent)]">
           {edition}
         </span>
         <span>{dateStr}</span>

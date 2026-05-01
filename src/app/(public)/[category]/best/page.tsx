@@ -91,25 +91,25 @@ export default async function TopNPage({
         title={`Best ${category.name.toLowerCase()}`}
         description="Our editorial top picks. Hands-on research, real customer reviews, pricing transparency, and integration breadth - weighted by what actually matters when buying software at this scale."
         meta={
-          <div className="flex flex-wrap items-center gap-x-8 gap-y-3 border-t border-[var(--color-rule)] pt-6 text-sm text-[var(--color-ink-muted)]">
+          <div className="flex flex-wrap items-center gap-x-8 gap-y-3 border-t border-[var(--border)] pt-6 text-sm text-[var(--fg-muted)]">
             <span className="font-mono text-[11px] uppercase tracking-[0.22em]">
               Last reviewed{" "}
-              <span className="text-[var(--color-ink)]">{lastReviewed}</span>
+              <span className="text-[var(--fg)]">{lastReviewed}</span>
             </span>
             <span className="font-mono text-[11px] uppercase tracking-[0.22em]">
               Tracking{" "}
-              <span className="text-[var(--color-ink)]">{category.vendors.length}</span> vendors
+              <span className="text-[var(--fg)]">{category.vendors.length}</span> vendors
             </span>
             <Link
               href={`/${category.slug}`}
-              className="font-mono text-[11px] uppercase tracking-[0.22em] text-[var(--color-forest)] link-underline"
+              className="font-mono text-[11px] uppercase tracking-[0.22em] text-[var(--accent)] link-underline"
             >
               ← Back to {category.name.toLowerCase()}
             </Link>
             {guide ? (
               <Link
                 href={`/${category.slug}/buyers-guide`}
-                className="font-mono text-[11px] uppercase tracking-[0.22em] text-[var(--color-forest)] link-underline"
+                className="font-mono text-[11px] uppercase tracking-[0.22em] text-[var(--accent)] link-underline"
               >
                 Buyer&apos;s guide →
               </Link>
@@ -120,12 +120,12 @@ export default async function TopNPage({
 
       <div className="mx-auto max-w-4xl px-6 py-14">
         {/* Methodology */}
-        <aside className="mb-12 grid gap-6 border border-[var(--color-rule)] bg-[var(--color-cream-soft)] p-6 md:grid-cols-[120px_1fr]">
-          <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-[var(--color-forest)]">
+        <aside className="mb-12 grid gap-6 border border-[var(--border)] bg-[var(--bg-elev)] p-6 md:grid-cols-[120px_1fr]">
+          <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-[var(--accent)]">
             How we ranked
           </p>
-          <p className="text-[15px] leading-relaxed text-[var(--color-ink-soft)]">
-            <strong className="font-display font-semibold text-[var(--color-ink)]">Editorial scores 1-10</strong>{" "}
+          <p className="text-[15px] leading-relaxed text-[var(--fg-soft)]">
+            <strong className="font-display font-semibold text-[var(--fg)]">Editorial scores 1-10</strong>{" "}
             based on hands-on research and real customer reviews. Sponsored vendors are clearly
             badged and must earn a <span className="font-mono">7.0+</span> on their own merits to
             appear anywhere in the top five.
