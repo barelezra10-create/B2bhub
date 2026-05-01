@@ -183,53 +183,72 @@ export default async function ComparisonPage({
         ])}
       />
 
-      {/* Hero with two logos */}
-      <section className="border-b border-[var(--color-rule)] bg-[var(--color-cream)] paper-grain">
-        <div className="mx-auto max-w-6xl px-6 py-16 md:py-20">
-          <p className="mb-6 inline-flex items-center gap-2 font-mono text-[10px] font-medium uppercase tracking-[0.22em] text-[var(--color-forest)]">
-            <span className="inline-block h-px w-8 bg-[var(--color-forest)]" aria-hidden />
-            Side-by-side · {a.category.name}
+      {/* Full-bleed forest hero */}
+      <section className="relative overflow-hidden bg-[var(--color-forest)] text-[var(--color-cream)]">
+        <div className="absolute inset-0 shine" aria-hidden />
+        <div className="absolute inset-0 paper-grain opacity-60" aria-hidden />
+        <div className="relative mx-auto max-w-6xl px-6 py-20 md:py-28">
+          <p className="mb-8 font-mono text-[10px] uppercase tracking-[0.28em] text-[var(--color-gold)]">
+            <span className="inline-block h-px w-8 bg-[var(--color-gold)] align-middle mr-2" aria-hidden />
+            Side-by-side · {a.category.name} · {new Date().getFullYear()}
           </p>
+
           <div className="grid items-center gap-8 md:grid-cols-[1fr_auto_1fr]">
             <Link
               href={`/${a.category.slug}/${a.slug}`}
-              className="group flex items-center gap-4 md:justify-end md:text-right"
+              className="group flex flex-col items-start gap-5 md:items-end"
             >
-              <div className="md:order-2">
-                <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--color-ink-subtle)]">
+              <div className="flex items-center gap-4 md:flex-row-reverse">
+                <VendorLogo vendor={a} size={88} rounded="md" />
+                <ScorePill score={a.ourScore} size="lg" />
+              </div>
+              <div className="md:text-right">
+                <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--color-gold)] opacity-80">
                   Contender A
                 </p>
-                <h2 className="mt-1 font-display text-3xl font-semibold leading-tight text-[var(--color-ink)] group-hover:text-[var(--color-forest)] md:text-4xl">
+                <h2
+                  className="mt-2 font-display text-4xl font-semibold leading-[0.95] tracking-tight text-[var(--color-cream)] group-hover:text-[var(--color-gold)] md:text-6xl"
+                  style={{ fontVariationSettings: "'opsz' 144, 'SOFT' 50" }}
+                >
                   {a.name}
                 </h2>
               </div>
-              <VendorLogo vendor={a} size={72} rounded="md" className="md:order-1" />
             </Link>
 
-            <div className="flex flex-col items-center justify-center">
-              <span className="font-display text-2xl italic text-[var(--color-forest)]">
+            <div className="flex flex-col items-center justify-center text-[var(--color-gold)]">
+              <span
+                className="font-display text-3xl italic md:text-4xl"
+                style={{ fontVariationSettings: "'opsz' 144, 'SOFT' 100" }}
+              >
                 versus
               </span>
-              <span className="mt-2 h-12 w-px bg-[var(--color-rule)]" aria-hidden />
+              <span className="mt-3 h-16 w-px bg-[var(--color-gold)] opacity-50" aria-hidden />
             </div>
 
             <Link
               href={`/${b.category.slug}/${b.slug}`}
-              className="group flex items-center gap-4"
+              className="group flex flex-col items-start gap-5"
             >
-              <VendorLogo vendor={b} size={72} rounded="md" />
+              <div className="flex items-center gap-4">
+                <VendorLogo vendor={b} size={88} rounded="md" />
+                <ScorePill score={b.ourScore} size="lg" />
+              </div>
               <div>
-                <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--color-ink-subtle)]">
+                <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--color-gold)] opacity-80">
                   Contender B
                 </p>
-                <h2 className="mt-1 font-display text-3xl font-semibold leading-tight text-[var(--color-ink)] group-hover:text-[var(--color-forest)] md:text-4xl">
+                <h2
+                  className="mt-2 font-display text-4xl font-semibold leading-[0.95] tracking-tight text-[var(--color-cream)] group-hover:text-[var(--color-gold)] md:text-6xl"
+                  style={{ fontVariationSettings: "'opsz' 144, 'SOFT' 50" }}
+                >
                   {b.name}
                 </h2>
               </div>
             </Link>
           </div>
+
           {cmp.hookCopy ? (
-            <p className="mt-8 max-w-3xl text-lg leading-relaxed text-[var(--color-ink-soft)]">
+            <p className="mt-10 max-w-3xl text-lg leading-relaxed text-[var(--color-cream)] opacity-90">
               {cmp.hookCopy}
             </p>
           ) : null}

@@ -10,6 +10,8 @@ import { SponsoredBadge } from "../../_components/SponsoredBadge";
 import { VendorCard } from "../../_components/VendorCard";
 import { VendorLogo } from "../../_components/VendorLogo";
 import { FaqList } from "../../_components/FaqList";
+import { EditorTake } from "../../_components/EditorTake";
+import { EditorMark, SectionBreak } from "../../_components/EditorMark";
 import { JsonLd, softwareApplicationJsonLd, breadcrumbJsonLd } from "@/lib/schema-org";
 
 export const revalidate = 3600;
@@ -325,17 +327,36 @@ export default async function VendorPage({
             </dl>
           </section>
 
+          {/* Editor's take callout */}
+          {vendor.descriptionShort ? (
+            <section className="mt-12">
+              <EditorTake
+                verdict={vendor.descriptionShort}
+                bestFor={
+                  vendor.bestForSegment === "all"
+                    ? "Teams of any size in this category"
+                    : `${SEGMENT_LABELS[vendor.bestForSegment] ?? vendor.bestForSegment} teams`
+                }
+                skipIf={vendor.cons[0] ?? undefined}
+                signature="The Hub Editorial"
+              />
+            </section>
+          ) : null}
+
           {/* Long description */}
           {vendor.descriptionLong ? (
             <section className="mt-12">
-              <header className="mb-4 flex items-baseline gap-3">
-                <h2 className="font-display text-2xl font-semibold tracking-tight text-[var(--color-ink)]">
+              <header className="mb-6 flex items-baseline gap-3">
+                <h2 className="font-display text-3xl font-semibold tracking-tight text-[var(--color-ink)]">
                   Our review
                 </h2>
                 <span className="h-px flex-1 bg-[var(--color-rule)]" aria-hidden />
               </header>
               <div className="dropcap">
                 <Markdown>{vendor.descriptionLong}</Markdown>
+              </div>
+              <div className="mt-6 flex justify-center text-[var(--color-forest)]">
+                <EditorMark size={14} />
               </div>
             </section>
           ) : null}
@@ -498,6 +519,14 @@ export default async function VendorPage({
           ) : null}
 
           <FaqList items={faqs} />
+
+          {/* End mark */}
+          <div className="mt-16 flex flex-col items-center gap-3 text-[var(--color-forest)]">
+            <EditorMark size={16} />
+            <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--color-ink-subtle)]">
+              End of review
+            </span>
+          </div>
         </article>
 
         {/* Sidebar */}
