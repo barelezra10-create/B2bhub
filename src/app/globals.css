@@ -1,27 +1,160 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
+/* Fraunces (display serif) + IBM Plex Mono (numerics) — Google Fonts */
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=IBM+Plex+Mono:wght@400;500;600&display=swap");
+/* General Sans (body) — Fontshare */
+@import url("https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap");
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Editorial palette */
+  --color-cream: #faf6ee;
+  --color-cream-soft: #f4eee0;
+  --color-ink: #0f0f0f;
+  --color-ink-soft: #2a2a2a;
+  --color-ink-muted: #5a5a5a;
+  --color-ink-subtle: #8a8a8a;
+  --color-rule: #d9d2c1;
+  --color-rule-soft: #e6dfce;
+
+  --color-forest: #1f3a2e;
+  --color-forest-deep: #142318;
+  --color-forest-soft: #335948;
+
+  --color-gold: #c8a961;
+  --color-gold-deep: #a3873e;
+  --color-gold-soft: #ecdfb5;
+
+  --color-rust: #b04a2f;
+  --color-cherry: #8b1f33;
+
+  --background: var(--color-cream);
+  --foreground: var(--color-ink);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+
+  --color-cream: var(--color-cream);
+  --color-cream-soft: var(--color-cream-soft);
+  --color-ink: var(--color-ink);
+  --color-ink-soft: var(--color-ink-soft);
+  --color-ink-muted: var(--color-ink-muted);
+  --color-ink-subtle: var(--color-ink-subtle);
+  --color-rule: var(--color-rule);
+  --color-rule-soft: var(--color-rule-soft);
+  --color-forest: var(--color-forest);
+  --color-forest-deep: var(--color-forest-deep);
+  --color-forest-soft: var(--color-forest-soft);
+  --color-gold: var(--color-gold);
+  --color-gold-deep: var(--color-gold-deep);
+  --color-gold-soft: var(--color-gold-soft);
+  --color-rust: var(--color-rust);
+  --color-cherry: var(--color-cherry);
+
+  --font-display: "Fraunces", ui-serif, Georgia, serif;
+  --font-sans: "General Sans", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  background: var(--background);
+  color: var(--foreground);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  font-feature-settings: "ss01" on, "ss02" on, "cv11" on;
+}
+
+/* Editorial typography defaults */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  color: var(--color-ink);
+}
+
+/* Numerical, mono with tabular figures */
+.num,
+.mono {
+  font-family: var(--font-mono);
+  font-feature-settings: "tnum" on, "lnum" on;
+}
+
+/* Decorative rule */
+.rule {
+  display: block;
+  border-top: 1px solid var(--color-rule);
+}
+.rule-double {
+  position: relative;
+  height: 6px;
+  border-top: 1px solid var(--color-rule);
+  border-bottom: 1px solid var(--color-rule);
+}
+
+/* Editorial dropcap */
+.dropcap > p:first-of-type::first-letter {
+  font-family: var(--font-display);
+  float: left;
+  font-size: 4.25rem;
+  line-height: 0.85;
+  padding: 0.45rem 0.6rem 0 0;
+  font-weight: 600;
+  color: var(--color-forest);
+}
+
+/* Subtle paper grain via radial gradients (very low intensity) */
+.paper-grain {
+  background-image:
+    radial-gradient(rgba(15, 15, 15, 0.018) 1px, transparent 1px),
+    radial-gradient(rgba(15, 15, 15, 0.018) 1px, transparent 1px);
+  background-size: 18px 18px, 24px 24px;
+  background-position: 0 0, 9px 9px;
+}
+
+/* Hover lift for cards */
+.card-lift {
+  transition: transform 200ms ease, border-color 200ms ease, box-shadow 200ms ease;
+}
+.card-lift:hover {
+  transform: translateY(-2px);
+  border-color: var(--color-ink);
+  box-shadow: 0 6px 0 -2px var(--color-forest);
+}
+
+/* Animated underline for links */
+.link-underline {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  background-size: 0% 1px;
+  transition: background-size 250ms ease;
+}
+.link-underline:hover {
+  background-size: 100% 1px;
+}
+
+/* Stagger entrance */
+@keyframes fade-rise {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.fade-rise {
+  animation: fade-rise 600ms ease both;
+}
+
+/* Score number tick */
+@keyframes score-pop {
+  0%   { transform: scale(0.92); opacity: 0; }
+  60%  { transform: scale(1.04); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+.score-pop {
+  animation: score-pop 500ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }

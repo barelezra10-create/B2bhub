@@ -1,17 +1,36 @@
 export function FaqList({
   items,
+  title = "Frequently asked",
 }: {
   items: { q: string; a: string }[];
+  title?: string;
 }) {
   if (items.length === 0) return null;
   return (
-    <section className="mt-12">
-      <h2 className="mb-4 text-xl font-semibold text-slate-900">FAQ</h2>
-      <dl className="divide-y divide-slate-200 rounded-lg border border-slate-200 bg-white">
-        {items.map((item) => (
-          <div key={item.q} className="p-5">
-            <dt className="font-medium text-slate-900">{item.q}</dt>
-            <dd className="mt-2 text-sm text-slate-600">{item.a}</dd>
+    <section className="mt-16">
+      <header className="mb-6 flex items-baseline gap-4">
+        <h2 className="font-display text-2xl font-semibold tracking-tight text-[var(--color-ink)]">
+          {title}
+        </h2>
+        <span className="h-px flex-1 bg-[var(--color-rule)]" aria-hidden />
+        <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--color-ink-muted)]">
+          {items.length.toString().padStart(2, "0")} questions
+        </span>
+      </header>
+      <dl className="divide-y divide-[var(--color-rule)] border-y border-[var(--color-rule)]">
+        {items.map((item, i) => (
+          <div key={item.q} className="grid gap-3 py-6 md:grid-cols-[80px_1fr]">
+            <span className="font-mono text-xs uppercase tracking-[0.18em] text-[var(--color-ink-subtle)]">
+              Q{(i + 1).toString().padStart(2, "0")}
+            </span>
+            <div>
+              <dt className="font-display text-lg font-semibold text-[var(--color-ink)]">
+                {item.q}
+              </dt>
+              <dd className="mt-2 text-[15px] leading-relaxed text-[var(--color-ink-soft)]">
+                {item.a}
+              </dd>
+            </div>
           </div>
         ))}
       </dl>
