@@ -29,18 +29,10 @@ const PRICING_LABELS: Record<string, string> = {
 };
 
 export async function generateStaticParams() {
-  try {
-    const vendors = await db.vendor.findMany({
-      where: { status: "published" },
-      select: { slug: true, category: { select: { slug: true } } },
-    });
-    return vendors.flatMap((v) => [
-      { category: v.category.slug, vendor: v.slug },
-      { category: v.category.slug, vendor: `${v.slug}-alternatives` },
-    ]);
-  } catch {
-    return [];
-  }
+  // Skip prerender for vendor + alternatives pages to keep build's DB
+  // connection count manageable. ISR (revalidate: 3600) handles caching;
+  // first request renders + caches, subsequent hits are fast.
+  return [];
 }
 
 function parseSegment(segment: string): { vendorSlug: string; isAlternatives: boolean } {
