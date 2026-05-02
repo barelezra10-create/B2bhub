@@ -113,7 +113,7 @@ export default async function CategoryPage({
             Best <span className="text-gradient">{category.name.toLowerCase()}</span>.
           </>
         }
-        description={category.description}
+        description={category.description.split("\n\n")[0]}
         meta={
           <div className="flex flex-wrap items-center gap-x-8 gap-y-3 border-t border-[var(--border)] pt-6 text-sm text-[var(--fg-muted)]">
             <span className="font-mono text-[11px] uppercase tracking-[0.22em] font-semibold">
@@ -140,6 +140,26 @@ export default async function CategoryPage({
       />
 
       <div className="container-x py-14">
+        {/* Long-form category intro */}
+        <section className="mb-12 max-w-3xl">
+          <h2 className="font-display text-2xl font-bold tracking-tight text-[var(--fg)] md:text-3xl">
+            About {category.name.toLowerCase()}
+          </h2>
+          <div className="mt-4 space-y-4 text-[16px] leading-relaxed text-[var(--fg-soft)]">
+            {category.description.split("\n\n").map((para, i) => (
+              <p key={i}>{para}</p>
+            ))}
+          </div>
+          {guide ? (
+            <Link
+              href={`/${category.slug}/buyers-guide`}
+              className="mt-6 inline-flex items-center gap-2 font-mono text-[11px] font-semibold uppercase tracking-[0.22em] text-[var(--accent)] link-underline"
+            >
+              Read the full {category.name.toLowerCase()} buyer&apos;s guide →
+            </Link>
+          ) : null}
+        </section>
+
         {/* Methodology callout */}
         <aside className="mb-10 grid gap-6 rounded-2xl border border-[var(--border)] bg-[var(--bg-elev)] p-6 md:grid-cols-[140px_1fr]">
           <p className="font-mono text-[11px] font-semibold uppercase tracking-[0.22em] text-[var(--accent-deep)]">
