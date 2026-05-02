@@ -12,6 +12,8 @@ import { VendorLogo } from "../../_components/VendorLogo";
 import { FaqList } from "../../_components/FaqList";
 import { EditorTake } from "../../_components/EditorTake";
 import { EditorMark, SectionBreak } from "../../_components/EditorMark";
+import { SubScoreBar } from "../../_components/SubScoreBar";
+import { computeSubScores, SUB_SCORE_KEYS, SUB_SCORE_LABELS } from "@/lib/sub-scores";
 import { JsonLd, softwareApplicationJsonLd, breadcrumbJsonLd } from "@/lib/schema-org";
 
 export const revalidate = 3600;
@@ -307,6 +309,29 @@ export default async function VendorPage({
       <div className="mx-auto grid max-w-6xl gap-12 px-6 py-14 md:grid-cols-[minmax(0,1fr)_280px]">
         {/* Main column */}
         <article className="min-w-0">
+          {/* Score breakdown */}
+          <section className="mb-12">
+            <header className="mb-5 flex items-baseline gap-3">
+              <h2 className="font-display text-2xl font-bold tracking-tight text-[var(--fg)]">
+                Score breakdown
+              </h2>
+              <span className="h-px flex-1 bg-[var(--border)]" aria-hidden />
+              <span className="font-mono text-[10px] uppercase tracking-[0.22em] font-semibold text-[var(--fg-muted)]">
+                6 dimensions
+              </span>
+            </header>
+            <div className="rounded-2xl border border-[var(--border)] bg-[var(--bg-elev)] p-6">
+              <div className="grid gap-x-10 gap-y-5 md:grid-cols-2">
+                {SUB_SCORE_KEYS.map((k) => {
+                  const sub = computeSubScores(vendor);
+                  return (
+                    <SubScoreBar key={k} label={SUB_SCORE_LABELS[k]} score={sub[k]} />
+                  );
+                })}
+              </div>
+            </div>
+          </section>
+
           {/* At-a-glance */}
           <section>
             <header className="mb-4 flex items-baseline gap-3">

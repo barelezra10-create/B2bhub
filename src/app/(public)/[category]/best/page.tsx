@@ -140,8 +140,6 @@ export default async function TopNPage({
                 rank={i + 1}
                 href={`/${category.slug}/${v.slug}`}
                 vendor={v}
-                ourScore={v.ourScore}
-                pricingStartingAt={v.pricingStartingAt}
                 pros={v.pros}
                 cons={v.cons}
                 bestForLabel={SEGMENT_LABELS[v.bestForSegment] ?? v.bestForSegment}
